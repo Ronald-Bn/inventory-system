@@ -12,10 +12,10 @@
 							<thead>
 								<th class="text-center">#</th>
 								<th class="text-center">Product Name</th>
-								<th class="text-center">Expiration Date</th>
 								<th class="text-center">Stock In</th>
 								<th class="text-center">Stock Out</th>
 								<th class="text-center">Stock Available</th>
+								<th class="text-center">Expiration Date</th>
 							</thead>
 							<tbody>
 							<?php 
@@ -31,10 +31,10 @@
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
 									<td class=""><?php echo $row['name'] ?></td>
-									<td class="text-right"><?php echo $row['description'] ?></td>
 									<td class="text-right"><?php echo $inn ?></td>
 									<td class="text-right"><?php echo $out ?></td>
 									<td class="text-right"><?php echo $available ?></td>
+									<td class="text-right"><?php echo $row['description'] ?></td>
 								</tr>
 							<?php endwhile; ?>
 							</tbody>

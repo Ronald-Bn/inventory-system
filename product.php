@@ -51,7 +51,7 @@
 							<input type="text" class="form-control" name="name" >
 						</div>
 						<div class="form-group">
-							<label class="control-label">Description</label>
+							<label class="control-label">Expiration Date (MM/DD/YYYY)</label>
 							<textarea class="form-control" cols="30" rows="3" name="description"></textarea>
 						</div>
 						<div class="form-group">
@@ -96,7 +96,7 @@
 										<p>SKU : <b><?php echo $row['sku'] ?></b></p>
 										<p><small>Category : <b><?php echo $cat_arr[$row['category_id']] ?></b></small></p>
 										<p><small>Name : <b><?php echo $row['name'] ?></b></small></p>
-										<p><small>Description : <b><?php echo $row['description'] ?></b></small></p>
+										<p><small>Exp. Date : <b><?php echo $row['description'] ?></b></small></p>
 										<p><small>Price : <b><?php echo number_format($row['price'],2) ?></b></small></p>
 									</td>
 									<td class="text-center">
