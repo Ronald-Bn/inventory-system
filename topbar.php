@@ -6,6 +6,7 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 	.logo {
     margin: auto;
     font-size: 20px;
@@ -15,9 +16,15 @@
 }
   .title{
     padding-top:10px;
+    color: #fff;
+    text-shadow: 0 0 10px #000000;
   }
   #navbar{
     background-color:#F65058;
+  }
+
+  .h2{
+
   }
 
 </style>
@@ -31,7 +38,7 @@
   			</div>
   		</div>
       <div class="col-md-8 float-left text-white title">
-        <h2><b>Red Camia Inventory System</b></h3>
+        <h2><b>Red Camia Inventory System</b></h2>
       </div>
 	  	<div class="col-md-2 float-right text-white">
 

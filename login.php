@@ -35,38 +35,31 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 	body{
 		width: 100%;
 	    height: calc(100%);
-	    /*background: #007bff;*/
-	}
-	main#main{
-		width:100%;
-		height: calc(100%);
-		background:white;
+  		display: flex;
+  		justify-content: center;
+  		align-items: center;
+  		padding: 10px;
+	    background-image:url('background-1.jpg');
+		background-size: cover;
+  		background-repeat: no-repeat;
+  		min-height: 100vh;
+  		min-width: 100vw;	
 	}
 
 	#login-right{
-		position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 40%;
-        height: 50%;
-        padding: 20px;
-        text-align: center;
-		
+		max-width: 700px;
+  		width: 100%;
+  		padding: 25px 30px;
+  		border-radius: 5px;
 	}
-	#login-left{
-		position: absolute;
-		left:0;
-		width:60%;
-		height: calc(100%);
-		background:#00000061;
-		display: flex;
-		align-items: center;
-	}
+	
 	#login-right .card{
 		margin: auto;
 		background: #fdf001;
+		border:2px black solid;
+		text-align: center;
 	}
+
 	.logo {
     margin: auto;
     font-size: 8rem;
@@ -74,7 +67,7 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
     padding: .5em 0.8em;
     border-radius: 50% 50%;
     color: #000000b3;
-}
+	}
 
 	.btn{
 		width:100%;
@@ -85,35 +78,34 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 	.h1{
 		color:#000;
 	}
-	.img{
+	.img{;
 		margin-top:50px
 	}
 
 </style>
 
 <body>
-
-
-  <main id="main" class=" bg-dark">
+  <main id="main">
   		<div id="login-right">
   			<div class="card col-md-8">
 				  <div class="card-body">
 					  <img src="logo-1.png" width="60%" height="60%">
 					  <h1>LOGIN<h1>
 					  <form id="login-form" >
-  						<div class="form-group">
+						  <div class="form-group">
   							<input type="text" id="username" name="username" class="form-control" placeholder="USERNAME" >
   						</div>
   						<div class="form-group">
   							<input type="password" id="password" name="password" class="form-control" placeholder="PASSWORD" >
   						</div>
-							<button class="col-md-8 btn">SIGN IN</button>
+						<div class="form-group">
+							<button class="form-control btn">SIGN IN</button>
+  						</div>
+							
   					</form>
   				</div>
   			</div>
   		</div>
-   
-
   </main>
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
