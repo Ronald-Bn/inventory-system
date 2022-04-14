@@ -133,7 +133,7 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 				}else if(resp == 2){
 					location.href ='voting.php';
 				}else{
-					$('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
+					$('#login-form').prepend('<div class="alert alert-danger"><h5>Username or password is incorrect.</h5></div>')
 					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
 				}
 			}
