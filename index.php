@@ -5,9 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Groceries Sales and Inventory System</title>
+  <title>Red Camia Inventory System</title>
  	
-
 <?php
 	session_start();
   if(!isset($_SESSION['login_id']))
