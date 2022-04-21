@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Admin | Groceries Sales and Inventory System</title>
+  <title>Red Camia Inventory System</title>
  	
 
 <?php include('./header.php'); ?>

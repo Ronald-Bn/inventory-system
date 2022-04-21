@@ -1,21 +1,25 @@
 <?php include 'db_connect.php' ?>
-<div class="container-fluid">
+
+<div class="container-fluid" >
 	<div class="col-lg-12">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 pt-4">
 				<div class="card">
 					<div class="card-header">
-						<h4><b>Inventory</b></h4>
+						<div class="row">
+							<div class="col-6"><h2><b>Inventory</b></h2></div>
+							<div class="col-6"><button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"> </i></button></div>
+						</div>
 					</div>
-					<div class="card-body">
-						<table class="table table-bordered">
+					<div class="card-body" id="print_inventory">
+						<table class="table table-collapse">
 							<thead>
-								<th class="text-center">#</th>
-								<th class="text-center">Product Name</th>
-								<th class="text-center">Stock In</th>
-								<th class="text-center">Stock Out</th>
-								<th class="text-center">Stock Available</th>
-								<th class="text-center">Expiration Date</th>
+								<th class="wborder text-center">#</th>
+								<th class="wborder text-center">Product Name</th>
+								<th class="wborder text-center">Stock In</th>
+								<th class="wborder text-center">Stock Out</th>
+								<th class="wborder text-center">Stock Available</th>
+								<th class="wborder text-center">Expiration Date</th>
 							</thead>
 							<tbody>
 							<?php 
@@ -29,12 +33,12 @@
 								$available = $inn - $out;
 							?>
 								<tr>
-									<td class="text-center"><?php echo $i++ ?></td>
-									<td class=""><?php echo $row['name'] ?></td>
-									<td class="text-right"><?php echo $inn ?></td>
-									<td class="text-right"><?php echo $out ?></td>
-									<td class="text-right"><?php echo $available ?></td>
-									<td class="text-right"><?php echo $row['description'] ?></td>
+									<td class="wborder text-center"> <?php echo $i++ ?> </td>
+									<td class="wborder"> <?php echo $row['name'] ?> </td>
+									<td class="wborder text-right"> <?php echo $inn ?> </td>
+									<td class="wborder text-right"> <?php echo $out ?> </td>
+									<td class="wborder text-right"> <?php echo $available ?> </td>
+									<td class="wborder text-right"> <?php echo $row['description'] ?> </td>
 								</tr>
 							<?php endwhile; ?>
 							</tbody>
@@ -45,7 +49,6 @@
 		</div>
 	</div>
 </div>
-
 
 <script>
 	$('table').dataTable()
@@ -72,4 +75,15 @@
 			}
 		})
 	}
+	$('#print-inventory').click(function(){
+		var _html = $('#print_inventory').clone();
+		var newWindow = window.open("","_blank","menubar=no,scrollbars=yes,resizable=yes,width=900,height=700");
+		newWindow.document.write('<html><head><title></title><link rel="stylesheet" type="text/css" href="styles.css"></head><body>');
+		newWindow.document.write('<h2>Inventory Reports</h2>')
+		newWindow.document.write(_html.html())
+		newWindow.document.write('</body></html>');
+		setTimeout(function(){;newWindow.print();}, 500);
+		setTimeout(function(){;newWindow.close();}, 1500);
+		
+	})
 </script>

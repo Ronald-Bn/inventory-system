@@ -3,15 +3,17 @@
 ?>
 
 <div class="container-fluid">
-	
-	<div class="row">
-	<div class="col-lg-12">
-			<button class="btn btn-primary float-right btn-sm" id="new_user"><i class="fa fa-plus"></i> New user</button>
-	</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="card col-lg-12">
+	<div class="col-lg-12 pt-4">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="row">
+							<div class="col-6"><h2><b>Users</b></h2></div>
+							<div class="col-6"><button class="col-md-3 float-right btn btn-primary btn-sm " id="new_user">New user <i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+			</div>	
 			<div class="card-body">
 				<table class="table-striped table-bordered col-md-12">
 			<thead>
@@ -61,7 +63,9 @@
 			</div>
 		</div>
 	</div>
-
+			</div>
+		</div>
+	</div>
 </div>
 <script>
 	

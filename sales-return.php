@@ -1,26 +1,26 @@
 <?php include 'db_connect.php' ?>
-
 <div class="container-fluid">
 	<div class="col-lg-12 pt-4">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-				<div class="card-header">
+					<div class="card-header">
 						<div class="row">
-							<div class="col-6"><h2><b>Sales</b></h2></div>
+							<div class="col-6"><h2><b>Sales Return</b></h2></div>
 							<div class="col-6">
-							<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"></i></button>
-							<button class="col-md-3 float-right btn btn-primary btn-sm" id="new_sales">New Sales <i class="fa fa-plus"></i></button></div>
+								<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"></i></button>
+								<button class="col-md-3 float-right btn btn-primary btn-sm" id="new_sales">New Sales <i class="fa fa-plus"></i></button></div>
 						</div>
-					</div>	
+					</div>
 					<div class="card-body">
 						<table class="table table-bordered">
 							<thead>
 								<th class="text-center">#</th>
-								<th class="text-center">Date</th>
-								<th class="text-center">Reference #</th>
-								<th class="text-center">Customer</th>
-								<th class="text-center">Action</th>
+								<th class="text-center">SKU</th>
+								<th class="text-center">Description</th>
+								<th class="text-center">Price</th>
+								<th class="text-center">Quantity</th>
+                                <th class="text-center">Date Return</th>
 							</thead>
 							<tbody>
 							<?php 
@@ -35,14 +35,12 @@
 								while($row=$sales->fetch_assoc()):
 							?>
 								<tr>
-									<td class="text-center"><?php echo $i++ ?></td>
-									<td class=""><?php echo date("M d, Y",strtotime($row['date_updated'])) ?></td>
-									<td class=""><?php echo $row['ref_no'] ?></td>
-									<td class=""><?php echo isset($cus_arr[$row['customer_id']])? $cus_arr[$row['customer_id']] :'N/A' ?></td>
-									<td class="text-center">
-										<a class="btn btn-sm btn-primary" href="index.php?page=pos&id=<?php echo $row['id'] ?>">Edit</a>
-										<a class="btn btn-sm btn-danger delete_sales" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
-									</td>
+									<td class="text-center"></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class=""></td>
+									<td class="text-center"></td>
+									<td class="text-center"></td>
 								</tr>
 							<?php endwhile; ?>
 							</tbody>

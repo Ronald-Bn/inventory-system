@@ -1,0 +1,39 @@
+table {
+  border-collapse: collapse;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
+}
+.wborder {
+  border: 1px solid gray;
+}
+.bbottom {
+  border-bottom: 1px solid black;
+}
+.dataTables_length,
+.dataTables_info,
+.dataTables_paginate,
+.dataTables_filter {
+  display: none;
+}
+td,
+th {
+  margin: unset;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.clear {
+  padding: 10px;
+}
+#uni_modal .modal-footer {
+  display: none;
+}

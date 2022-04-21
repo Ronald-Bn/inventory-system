@@ -23,19 +23,27 @@
     background-color:#F65058;
   }
 
-  .h2{
+  .header img {
+  float: left;
+  width: 80px;
+  height: 50px;
+}
 
-  }
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+
+
 
 </style>
 
 <nav class="navbar fixed-top" id="navbar" style="padding:0;">
   <div class="container-fluid mt-2 mb-2">
   	<div class="col-lg-12">
-  		<div class="col-md-1 float-left" style="display: flex;">
-  			<div class="logo">
-          <img src="logo-1.png" width="100%" height="100%">
-  			</div>
+  			  <div class="header">
+          <img src="logo-1.png">
   		</div>
       <div class="col-md-8 float-left text-white title">
         <h2><b>Red Camia Inventory System</b></h2>

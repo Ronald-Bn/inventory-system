@@ -14,7 +14,7 @@
 			<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
-				<h3><?php echo "Welcome back ".$_SESSION['login_name']."!"  ?><h3>			
+				<h2><?php echo "Welcome back <b>".$_SESSION['login_name']."!</b>"  ?><h2>			
 				</div>
 				<hr>
 				<div class="alert alert-success col-md-4 ml-4">

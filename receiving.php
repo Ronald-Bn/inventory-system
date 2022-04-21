@@ -1,12 +1,17 @@
 <?php include 'db_connect.php' ?>
 <div class="container-fluid">
-	<div class="col-lg-12">
-		<div class="row">
-			<button class="col-md-2 float-right btn btn-primary btn-sm" id="new_receiving"><i class="fa fa-plus"></i> New Receiving</button>
-		</div>
+	<div class="col-lg-12 pt-4">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
+				<div class="card-header">
+						<div class="row">
+							<div class="col-6"><h2><b>Receiving</b></h2></div>
+							<div class="col-6">
+								<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"></i></button>
+								<button class="col-md-4 float-right btn btn-primary btn-sm" id="new_receiving">New Receiving <i class="fa fa-plus"></i></button></div>
+						</div>
+					</div>
 					<div class="card-body">
 						<table class="table table-bordered">
 							<thead>
