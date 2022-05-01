@@ -28,7 +28,7 @@ if(isset($_GET['id'])){
 									<option value="0" selected="">Guest</option>
 								<?php 
 
-								$customer = $conn->query("SELECT * FROM customer_list order by name asc");
+								$customer = $conn->query("SELECT * FROM users order by name asc");
 								while($row=$customer->fetch_assoc()):
 								?>
 									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>

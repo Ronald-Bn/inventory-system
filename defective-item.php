@@ -27,7 +27,7 @@ if(isset($_GET['id'])){
 								<select name="customer_id" class="custom-select browser-default select2">
 									
 								<?php 
-								$customer = $conn->query("SELECT * FROM customer_list order by name asc");
+								$customer = $conn->query("SELECT * FROM users order by name asc");
 								while($row=$customer->fetch_assoc()):
 								?>
 									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
@@ -78,6 +78,10 @@ if(isset($_GET['id'])){
 	</div>
 </div>
 <script>
+	$('.select2').select2({
+	 	placeholder:"Please select here",
+	 	width:"100%"
+	})
 		$('#save-defective').submit(function(e){
 			e.preventDefault()
 			start_load()
