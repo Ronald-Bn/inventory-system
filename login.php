@@ -15,6 +15,31 @@ session_start();
 if(isset($_SESSION['login_id']))
 header("location:index.php?page=home");
 
+if(isset($_SESSION["locked"])){
+	$difference = time() - $_SESSION["locked"];
+	if($difference > 10){
+		$save = $conn->query("UPDATE tblattempts set attempts = 0 where id = '1'");
+		unset($_SESSION["locked"]);
+		unset($_SESSION["error"]);
+		};
+}
+
+$_SESSION["login_attempts"] = 0;
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+	$qry = $conn->query("SELECT * FROM users where username = '".$username."' and password = '".$password."' ");
+		if($qry->num_rows > 0){
+			foreach ($qry->fetch_array() as $key => $value) {
+				if($key != 'passwors' && !is_numeric($key))
+					$_SESSION['login_'.$key] = $value;
+			}
+			header("location:index.php?page=home");
+		}else{
+			 $_SESSION["error"] = "Username or password is incorrect.";
+			 $save = $conn->query("UPDATE tblattempts set attempts = attempts + 1 where id = '1'");
+		}
+}
 $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 		foreach ($query as $key => $value) {
 			if(!is_numeric($key))
@@ -86,12 +111,15 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 
 <body>
   <main id="main">
-  		<div id="login-right">
+  		<div id="login-right"> 	
   			<div class="card col-md-8">
 				  <div class="card-body">
 					  <img src="logo-1.png" width="60%" height="60%">
 					  <h1>LOGIN<h1>
-					  <form id="login-form" >
+					  <?php if(isset($_SESSION["error"])) {?>	
+						 <div class="alert alert-danger"><h5><?= $_SESSION["error"];?></h5></div>
+					  <?php unset($_SESSION["error"]); } ?>	  
+					  <form action="" method="POST" >
 						  <div class="form-group">
   							<input type="text" id="username" name="username" class="form-control" placeholder="USERNAME" >
   						</div>
@@ -99,9 +127,19 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
   							<input type="password" id="password" name="password" class="form-control" placeholder="PASSWORD" >
   						</div>
 						<div class="form-group">
+						  <?php
+						  	$qry = $conn->query("SELECT attempts FROM tblattempts where id = '1'");
+							while($row=$qry->fetch_assoc()):
+								if($row['attempts'] > 3){
+									$_SESSION["locked"] = time(); 
+									echo "Please wait for 5 minutes";
+								}
+								 else {
+								  ?>
 							<button class="form-control btn">SIGN IN</button>
-  						</div>
-							
+							<?php }
+							endwhile; ?>
+  						</div>	
   					</form>
   				</div>
   			</div>
@@ -112,32 +150,4 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 
 
 </body>
-<script>
-	$('#login-form').submit(function(e){
-		e.preventDefault()
-		$('#login-form button[type="button"]').attr('disabled',true).html('Logging in...');
-		if($(this).find('.alert-danger').length > 0 )
-			$(this).find('.alert-danger').remove();
-		$.ajax({
-			url:'ajax.php?action=login',
-			method:'POST',
-			data:$(this).serialize(),
-			error:err=>{
-				console.log(err)
-		$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
-
-			},
-			success:function(resp){
-				if(resp == 1){
-					location.href ='index.php?page=home';
-				}else if(resp == 2){
-					location.href ='voting.php';
-				}else{
-					$('#login-form').prepend('<div class="alert alert-danger"><h5>Username or password is incorrect.</h5></div>')
-					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
-				}
-			}
-		})
-	})
-</script>	
 </html>

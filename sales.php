@@ -7,10 +7,10 @@
 				<div class="card">
 				<div class="card-header">
 						<div class="row">
-							<div class="col-6"><h2><b>Sales</b></h2></div>
+							<div class="col-6"><h2><b>Stock Out</b></h2></div>
 							<div class="col-6">
 							<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"></i></button>
-							<button class="col-md-3 float-right btn btn-primary btn-sm" id="new_sales">New Sales <i class="fa fa-plus"></i></button></div>
+							<button class="col-md-3 float-right btn btn-primary btn-sm" id="new_sales">Stock out <i class="fa fa-plus"></i></button></div>
 						</div>
 					</div>	
 					<div class="card-body">
@@ -19,7 +19,7 @@
 								<th class="text-center">#</th>
 								<th class="text-center">Date</th>
 								<th class="text-center">Reference #</th>
-								<th class="text-center">Customer</th>
+								<th class="text-center">Clerk</th>
 								<th class="text-center">Action</th>
 							</thead>
 							<tbody>
@@ -36,7 +36,7 @@
 							?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
-									<td class=""><?php echo date("M d, Y",strtotime($row['date_updated'])) ?></td>
+									<td class=""><?php echo date("m/d/Y",strtotime($row['date_updated'])) ?></td>
 									<td class=""><?php echo $row['ref_no'] ?></td>
 									<td class=""><?php echo isset($cus_arr[$row['customer_id']])? $cus_arr[$row['customer_id']] :'N/A' ?></td>
 									<td class="text-center">

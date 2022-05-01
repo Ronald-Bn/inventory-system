@@ -9,10 +9,12 @@
  	
 <?php
 	session_start();
+  $_SESSION['login_attempts'] = 0;
   if(!isset($_SESSION['login_id']))
     header('location:login.php');
- include('./header.php'); 
- // include('./auth.php'); 
+
+  include('./header.php'); 
+
  ?>
 
 </head>

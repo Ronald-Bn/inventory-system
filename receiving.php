@@ -6,10 +6,10 @@
 				<div class="card">
 				<div class="card-header">
 						<div class="row">
-							<div class="col-6"><h2><b>Receiving</b></h2></div>
+							<div class="col-6"><h2><b>Stock In</b></h2></div>
 							<div class="col-6">
 								<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"></i></button>
-								<button class="col-md-4 float-right btn btn-primary btn-sm" id="new_receiving">New Receiving <i class="fa fa-plus"></i></button></div>
+								<button class="col-md-4 float-right btn btn-primary btn-sm" id="new_receiving">New Stock <i class="fa fa-plus"></i></button></div>
 						</div>
 					</div>
 					<div class="card-body">
@@ -33,7 +33,7 @@
 							?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
-									<td class=""><?php echo date("M d, Y",strtotime($row['date_added'])) ?></td>
+									<td class=""><?php echo date("m/d/Y",strtotime($row['date_added'])) ?></td>
 									<td class=""><?php echo $row['ref_no'] ?></td>
 									<td class=""><?php echo isset($sup_arr[$row['supplier_id']])? $sup_arr[$row['supplier_id']] :'N/A' ?></td>
 									<td class="text-center">

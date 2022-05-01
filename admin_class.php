@@ -3,7 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 Class Action {
 	private $db;
-
+	
 	public function __construct() {
 		ob_start();
    	include 'db_connect.php';
@@ -28,6 +28,7 @@ Class Action {
 			return 3;
 		}
 	}
+
 	function login2(){
 		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM user_info where email = '".$email."' and password = '".md5($password)."' ");
@@ -43,6 +44,7 @@ Class Action {
 			return 3;
 		}
 	}
+
 	function logout(){
 		session_destroy();
 		foreach ($_SESSION as $key => $value) {
@@ -64,6 +66,7 @@ Class Action {
 		$data .= ", username = '$username' ";
 		$data .= ", password = '$password' ";
 		$data .= ", type = '$type' ";
+		$data  .= ",attempts = 0 ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO users set ".$data);
 		}else{
@@ -136,12 +139,14 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM category_list where id = ".$id);
 		if($delete)
 			return 1;
 	}
+	
 	function save_supplier(){
 		extract($_POST);
 		$data = " supplier_name = '$name' ";
@@ -168,6 +173,7 @@ Class Action {
 		$data .= ", category_id = '$category_id' ";
 		$data .= ", description = '$description' ";
 		$data .= ", price = '$price' ";
+		$data .= ", remarks = '$remarks' ";
 
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO product_list set ".$data);
@@ -247,10 +253,8 @@ Class Action {
 				}
 			}
 			if(isset($save2)){
-				
 				return 1;
 			}
-
 		}
 	}
 
@@ -292,6 +296,7 @@ Class Action {
 		return json_encode(array('available'=>$available,'price'=>$price));
 
 	}
+
 	function save_sales(){
 		extract($_POST);
 		$data = " customer_id = '$customer_id' ";

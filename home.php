@@ -16,17 +16,6 @@
 				<div class="card-body">
 				<h2><?php echo "Welcome back <b>".$_SESSION['login_name']."!</b>"  ?><h2>			
 				</div>
-				<hr>
-				<div class="alert alert-success col-md-4 ml-4">
-					<p><b><large>Total Sales Today</large></b></p>
-				<hr>
-					<p class="text-right"><b><large><?php 
-					include 'db_connect.php';
-					$sales = $conn->query("SELECT SUM(total_amount) as amount FROM sales_list where date(date_updated)= '".date('Y-m-d')."'");
-					echo $sales->num_rows > 0 ? number_format($sales->fetch_array()['amount'],2) : "0.00";
-
-					 ?></large></b></p>
-				</div>
 			</div>
 			
 		</div>

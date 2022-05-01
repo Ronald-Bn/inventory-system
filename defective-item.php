@@ -14,7 +14,7 @@ if(isset($_GET['id'])){
 	<div class="col-lg-12 pt-4">
 		<div class="card">
 			<div class="card-header">
-				<h2><b>Stock Out</b></h2>
+				<h2><b>Insert Item</b></h2>
 			</div>
 			<div class="card-body">
 				<form action="" id="manage-sales">
@@ -25,7 +25,7 @@ if(isset($_GET['id'])){
 							<div class="form-group col-md-5">
 								<label class="control-label">Clerk</label>
 								<select name="customer_id" id="" class="custom-select browser-default select2">
-									<option value="0" selected="">Guest</option>
+									
 								<?php 
 
 								$customer = $conn->query("SELECT * FROM customer_list order by name asc");
@@ -59,7 +59,15 @@ if(isset($_GET['id'])){
 									<label class="control-label">Qty</label>
 									<input type="number" class="form-control text-right" step="any" id="qty" >
 								</div>
-								<div class="col-md-3">
+                                <div class="col-md-4">
+									<label class="control-label">Date Purchase (MM/DD/YYYY)</label>
+									<input type="text" class="form-control text-left" step="any" id="qty" >
+								</div>
+                                <div class="col-md-10">
+									<label class="control-label">Remarks</label>
+									<input type="text" class="form-control text-left" step="any" id="" >
+								</div>
+								<div class="col-md-2">
 									<label class="control-label">&nbsp</label>
 									<button class="btn btn-block btn-sm btn-primary" type="button" id="add_list"><i class="fa fa-plus"></i> Add to List</button>
 								</div>
@@ -126,7 +134,7 @@ if(isset($_GET['id'])){
 							</table>
 						</div>
 						<div class="row">
-							<button class="btn btn-primary btn-sm btn-block float-right " type="button" id="pay">Pay</button>
+							<button class="btn btn-primary btn-sm btn-block float-right " type="button" id="pay">Save</button>
 						</div>
 					</div>
 					<div class="modal fade" id="pay_modal" role='dialog'>

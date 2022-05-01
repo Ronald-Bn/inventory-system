@@ -8,16 +8,20 @@
 					<div class="card-header">
 						<div class="row">
 							<div class="col-6"><h2><b>Inventory</b></h2></div>
-							<div class="col-6"><button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"> </i></button></div>
+							<div class="col-6">
+							<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-inventory">Print <i class="fa fa-print"> </i></button>
+							<button class="col-md-2 float-right btn btn-success btn-sm " onclick="ExportToExcel()">Export <i class="fa fa-print"> </i></button>
+							</div>
 						</div>
 					</div>
 					<div class="card-body" id="print_inventory">
-						<table class="table table-collapse">
+						<table class="table table-collapse" id="tblInventories">
 							<thead>
 								<th class="wborder text-center">#</th>
 								<th class="wborder text-center">Product Name</th>
 								<th class="wborder text-center">Stock In</th>
 								<th class="wborder text-center">Stock Out</th>
+								<th class="wborder text-center">Defective</th>
 								<th class="wborder text-center">Stock Available</th>
 								<th class="wborder text-center">Expiration Date</th>
 							</thead>
@@ -30,13 +34,16 @@
 								$inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
 								$out = $conn->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$row['id']);
 								$out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
+								$def = $conn->query("SELECT sum(qty) as `def` FROM defective_list where type = 3 and product_id = ".$row['id']);
+								$def = $def && $def->num_rows > 0 ? $def->fetch_array()['def'] : 0;
 								$available = $inn - $out;
 							?>
-								<tr>
+								<tr <?php echo ($available < 10 ? "class='table-danger'" : ""); ?>>
 									<td class="wborder text-center"> <?php echo $i++ ?> </td>
 									<td class="wborder"> <?php echo $row['name'] ?> </td>
 									<td class="wborder text-right"> <?php echo $inn ?> </td>
 									<td class="wborder text-right"> <?php echo $out ?> </td>
+									<td class="wborder text-right"> <?php echo $def ?> </td>
 									<td class="wborder text-right"> <?php echo $available ?> </td>
 									<td class="wborder text-right"> <?php echo $row['description'] ?> </td>
 								</tr>
@@ -50,6 +57,16 @@
 	</div>
 </div>
 
+<script>
+        function ExportToExcel(type, fn, dl) {
+            var elt = document.getElementById('tblInventories');
+            var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+            return dl ?
+                XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) :
+                XLSX.writeFile(wb, fn || ('Inventory_Reports.' + (type || 'xlsx')));
+        }
+
+    </script>
 <script>
 	$('table').dataTable()
 	$('#new_receiving').click(function(){
@@ -84,6 +101,5 @@
 		newWindow.document.write('</body></html>');
 		setTimeout(function(){;newWindow.print();}, 500);
 		setTimeout(function(){;newWindow.close();}, 1500);
-		
 	})
 </script>
