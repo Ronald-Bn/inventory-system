@@ -44,7 +44,7 @@
 
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: green;
+  background-color: #000000c4;
   color: white;
 }
 
@@ -68,7 +68,7 @@
 		<div class="sidebar-list">
 		<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Home</a>
 		<a href="index.php?page=inventory" class="nav-item nav-inventory" style="width:100%"><span class='icon-field'><i class="fa fa-list"></i></span> Inventory</a></div>
-			<button class="nav-item dropdown-btn">Manage Inventory&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
+			<button class="dropdown-btn">Manage Inventory&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
 				<a href="index.php?page=sales" class="nav-item nav-sales"><span class='icon-field'><i class="fa fa-coins"></i></span> Stock Out</a>
 				<a href="index.php?page=sales-return" class="nav-item nav-sales-return"><span class='icon-field'><i class="fa fa-exclamation-circle"></i></span> Defective items</a>
@@ -108,7 +108,7 @@ for (i = 0; i < dropdown.length; i++) {
 		.nav-item{
 			display: none!important;
 		}
-		.nav-sales ,.nav-home ,.nav-inventory, .nav-logout{
+		.nav-manage_receiving, .nav-sales-return, .nav-sales ,.nav-home ,.nav-inventory, .nav-logout{
 			display: block!important;
 		}
 	</style>

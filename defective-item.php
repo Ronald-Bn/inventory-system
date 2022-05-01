@@ -36,7 +36,7 @@ if(isset($_GET['id'])){
 							</div>
 						</div>
 						<hr>
-						<div class="row mb-3">
+						<div class="row mb-3 justify-content-between">
 								<div class="col-md-4">
 									<label class="control-label">Product</label>
 									<select name="product" id="product" class="custom-select browser-default select2">
@@ -60,15 +60,15 @@ if(isset($_GET['id'])){
 								</div>
                                 <div class="col-md-4">
 									<label class="control-label">Date Purchase (MM/DD/YYYY)</label>
-									<input type="text" class="form-control text-left" name="date_purchase">
+									<input type="text" class="form-control text-left" name="date_purchase" id="date_purchase">
 								</div>
-                                <div class="col-md-10">
+                                <div class="col-md-12">
 									<label class="control-label">Remarks</label>
-									<input type="text" class="form-control text-left" style="text-transform:uppercase" name="remarks">
+									<input type="text" class="form-control text-left" style="text-transform:uppercase" name="remarks" id="remarks">
 								</div>
 								<div class="col-md-12">
 									<label class="control-label">&nbsp</label>
-									<button class="btn btn-block btn-sm btn-primary"><i class="fa fa-plus"></i> Save</button>
+									<button class="btn btn-block btn-sm btn-primary">Save</button>
 								</div>
 						</div>
 					</div>	
@@ -81,7 +81,7 @@ if(isset($_GET['id'])){
 		$('#save-defective').submit(function(e){
 			e.preventDefault()
 			start_load()
-			if($('#qty').val() == ''){
+			if($('#product').val() == '' || $('#qty').val() == '' || $('#date_purchase').val() == '' || $('#remarks').val() == ''){
 			alert_toast("Please complete the fields first",'danger');
 			end_load();
 			return false;
