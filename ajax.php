@@ -114,3 +114,9 @@ if($action == "delete_sales"){
 		echo $save;
 }
 
+if($action == "save_defective"){
+	$save = $crud->save_defective();
+	if($save)
+		echo $save;
+}
+

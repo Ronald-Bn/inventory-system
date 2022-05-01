@@ -11,10 +11,10 @@ if(isset($_GET['id'])){
 
 ?>
 <div class="container-fluid">
-	<div class="col-lg-12">
+	<div class="col-lg-12 pt-4">
 		<div class="card">
 			<div class="card-header">
-				<h4>Manage Receiving</h4>
+				<h2><b>Stock In</b></h2>
 			</div>
 			<div class="card-body">
 				<form action="" id="manage-receiving">

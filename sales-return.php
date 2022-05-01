@@ -36,8 +36,8 @@
 							?>
 								<tr>
 									<td class="wborder text-center"><?php echo $i++ ?></td>
-									<td class=""><?php echo $row['SKU']?></td>
-									<td class=""><?php echo $row['product']?></td>
+									<td class=""><?php echo $row['sku']?></td>
+									<td class=""><?php echo $row['product_name']?></td>
 									<td class="wborder text-right"><?php echo $row['date_purchase']?></td>
 									<td class="text-right"><?php echo $row['qty']?></td>
 									<td class="text-center"><?php echo $row['remarks']?></td>

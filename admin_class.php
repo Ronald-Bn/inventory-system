@@ -265,6 +265,7 @@ Class Action {
 		if($del1 && $del2)
 			return 1;
 	}
+
 	function save_customer(){
 		extract($_POST);
 		$data = " name = '$name' ";
@@ -278,6 +279,7 @@ Class Action {
 		if($save)
 			return 1;
 	}
+
 	function delete_customer(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM customer_list where id = ".$id);
@@ -368,4 +370,22 @@ Class Action {
 			return 1;
 	}
 
+	function save_defective(){
+		extract($_POST);
+		list($sku, $product_id, $product_name) = explode("|", $product);
+		$data = " id = ''";
+		$data .= ", sku = '$sku'";
+		$data .= ", product_id = '$product_id'";
+		$data .= ", product_name = '$product_name'";
+		$data .= ", qty = '$qty'";
+		$data .= ", date_purchase = '$date_purchase'";
+		$data .= ", remarks = '$remarks' ";
+		$data .= ", type = '3' ";
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO defective_list set ".$data);
+		}
+		if($save){
+			return 1;
+		}
+	}
 }
