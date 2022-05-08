@@ -177,11 +177,29 @@ Class Action {
 
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO product_list set ".$data);
-		}else{
-			$save = $this->db->query("UPDATE product_list set ".$data." where id=".$id);
 		}
-		if($save)
+		if($save){
 			return 1;
+		}
+	}
+
+	function edit_product(){
+		extract($_POST);
+		$data = " name = '$name' ";
+		$data .= ", sku = '$sku' ";
+		$data .= ", category_id = '$category_id' ";
+		$data .= ", description = '$description' ";
+		$data .= ", price = '$price' ";
+		$data .= ", remarks = '$remarks' ";
+
+		if(!empty($id)){
+			$save = $this->db->query("UPDATE product_list set ".$data." where id=".$id);
+		}else{
+			return 3;
+		}
+		if($save){
+			return 2;
+		}
 	}
 
 	function delete_product(){
@@ -302,9 +320,9 @@ Class Action {
 	function save_sales(){
 		extract($_POST);
 		$data = " customer_id = '$customer_id' ";
-		$data .= ", total_amount = '$tamount' ";
-		$data .= ", amount_tendered = '$amount_tendered' ";
-		$data .= ", amount_change = '$change' ";
+		$data .= ", total_amount = '0' ";
+		$data .= ", amount_tendered = '0' ";
+		$data .= ", amount_change = '0' ";
 		
 		if(empty($id)){
 			$ref_no = sprintf("%'.08d\n", $ref_no);
@@ -373,19 +391,29 @@ Class Action {
 	function save_defective(){
 		extract($_POST);
 		list($sku, $product_id, $product_name) = explode("|", $product);
-		$data = " id = ''";
+		$up_remarks = strtoupper($remarks);
+		$data = " id = '$id'";
 		$data .= ", sku = '$sku'";
 		$data .= ", product_id = '$product_id'";
 		$data .= ", product_name = '$product_name'";
 		$data .= ", qty = '$qty'";
 		$data .= ", date_purchase = '$date_purchase'";
-		$data .= ", remarks = '$remarks' ";
+		$data .= ", remarks = '$up_remarks'";
 		$data .= ", type = '3' ";
 		if(empty($id)){
 			$save = $this->db->query("INSERT INTO defective_list set ".$data);
+		}else{
+			$save = $this->db->query("UPDATE defective_list set ".$data." where id=".$id);
 		}
 		if($save){
 			return 1;
 		}
+	}
+
+	function delete_defective(){
+		extract($_POST);
+		$del1 = $this->db->query("DELETE FROM defective_list where id = $id ");
+		if($del1)
+			return 1;
 	}
 }

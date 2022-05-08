@@ -97,7 +97,7 @@ if(isset($_GET['id'])){
 												<input type="hidden" name="inv_id[]" value="<?php echo $row['id'] ?>">
 												<input type="hidden" name="product_id[]" value="<?php echo $row['product_id'] ?>">
 												<p class="pname">Name: <b><?php echo $prod[$row['product_id']]['name'] ?></b></p>
-												<p class="pdesc"><small><i>Description: <b><?php echo $prod[$row['product_id']]['description'] ?></b></i></small></p>
+												<p class="pdesc"><small><i>Expiration Date: <b><?php echo $prod[$row['product_id']]['description'] ?></b></i></small></p>
 											</td>
 											<td>
 												<input type="number" min="1" step="any" name="qty[]" value="<?php echo $row['qty'] ?>" class="text-right">
@@ -110,7 +110,7 @@ if(isset($_GET['id'])){
 												<p class="amount text-right"></p>
 											</td>
 											<td class="text-center">
-												<buttob class="btn btn-sm btn-danger" onclick = "rem_list($(this))"><i class="fa fa-trash"></i></buttob>
+												<button class="btn btn-sm btn-danger" onclick = "rem_list($(this))"><i class="fa fa-trash"></i></buttob>
 											</td>
 										</tr>
 									<?php endwhile; ?>
@@ -126,41 +126,11 @@ if(isset($_GET['id'])){
 							</table>
 						</div>
 						<div class="row">
-							<button class="btn btn-primary btn-sm btn-block float-right " type="button" id="pay">Pay</button>
+							<button type="button" class="btn btn-block btn-sm btn-primary" id='submit' onclick="$('#manage-sales').submit()">Save</button>
 						</div>
 					</div>
-					<div class="modal fade" id="pay_modal" role='dialog'>
-					    <div class="modal-dialog modal-md" role="document">
-					      <div class="modal-content">
-					        <div class="modal-header">
-					        <h5 class="modal-title"></h5>
-					      </div>
-					      <div class="modal-body">
-					      	<div class="container-fluid">
-					      		<div class="form-group">
-					      			<label for="" class="control-label">Total Amount</label>
-					      			<input type="text" name="tamount" value="" class="form-control text-right" readonly="">
-					      		</div>
-					      		<div class="form-group">
-					      			<label for="" class="control-label">Amount Tendered</label>
-					      			<input type="number" name="amount_tendered" value="0" min="0" class="form-control text-right" >
-					      		</div>
-					      		<div class="form-group">
-					      			<label for="" class="control-label">Change</label>
-					      			<input type="number" name="change" value="0" min="0" class="form-control text-right" readonly="">
-					      		</div>
-					      	</div>
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-primary" id='submit' onclick="$('#manage-sales').submit()">Pay</button>
-					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					      </div>
-					      </div>
-					    </div>
-					  </div>
 				</form>
 			</div>
-			
 		</div>
 	</div>
 </div>
@@ -171,7 +141,7 @@ if(isset($_GET['id'])){
 			<input type="hidden" name="inv_id[]" value="">
 			<input type="hidden" name="product_id[]" value="">
 			<p class="pname">Name: <b>product</b></p>
-			<p class="pdesc"><small><i>Description: <b>Description</b></i></small></p>
+			<p class="pdesc"><small><i>Expiration Date: <b>Description</b></i></small></p>
 		</td>
 		<td>
 			<input type="number" min="1" step="any" name="qty[]" value="" class="text-right">
@@ -312,17 +282,21 @@ if(isset($_GET['id'])){
 			end_load();
 			return false;
 		}
+		if($("#list .item-row").length > 5){
+			alert_toast("only 5 items can stock out at a time ",'danger');
+			end_load();
+			return false;
+		}
 		$.ajax({
 			url:'ajax.php?action=save_sales',
 		    method: 'POST',
 		    data: $(this).serialize(),
 			success:function(resp){
 				if(resp > 0){
-					end_load()
-					alert_toast("Data successfully submitted",'success')
-					uni_modal('Print',"print_sales.php?id="+resp)
-					$('#uni_modal').modal({backdrop:'static',keyboard:false})
-
+					alert_toast("Data successfully added",'success')
+					setTimeout(function(){
+						location.href = "index.php?page=sales"
+					},1500)
 				}
 				
 			}

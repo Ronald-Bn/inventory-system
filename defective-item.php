@@ -1,7 +1,7 @@
 <?php include 'db_connect.php';
 
 if(isset($_GET['id'])){
-	$qry = $conn->query("SELECT * FROM sales_list where id=".$_GET['id'])->fetch_array();
+	$qry = $conn->query("SELECT * FROM defective_list where id=".$_GET['id'])->fetch_array();
 	foreach($qry as $k => $val){
 		$$k = $val;
 	}
@@ -60,8 +60,14 @@ if(isset($_GET['id'])){
 								</div>
                                 <div class="col-md-4">
 									<label class="control-label">Date Purchase (MM/DD/YYYY)</label>
-									<input type="text" class="form-control text-left" name="date_purchase" id="date_purchase">
+									<div class="input-group date" data-provide="datepicker">
+										<input type="text" class="form-control" name="date_purchase" id="date_purchase">
+										<div class="input-group-addon">
+											<span class="glyphicon glyphicon-th"></span>
+										</div>
+									</div>
 								</div>
+								
                                 <div class="col-md-12">
 									<label class="control-label">Remarks</label>
 									<input type="text" class="form-control text-left" style="text-transform:uppercase" name="remarks" id="remarks">
@@ -102,7 +108,7 @@ if(isset($_GET['id'])){
 				if(resp==1){
 					alert_toast("Data successfully added",'success')
 					setTimeout(function(){
-						location.reload()
+						location.href = "index.php?page=sales-return"
 					},1500)
 				}else{
 					alert_toast("Something, Wrong")

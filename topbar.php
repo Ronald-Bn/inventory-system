@@ -35,11 +35,16 @@
   left: 10px;
 }
 
+@media screen and (max-width: 780px) {
+  h2 {
+    font-size: 150%;
+  }
+}
 
 
 </style>
 
-<nav class="navbar fixed-top" id="navbar" style="padding:0;">
+<nav class="navbar fixed-top" id="navbar" style="padding:0; z-index: 1;">
   <div class="container-fluid mt-2 mb-2">
   	<div class="col-lg-12">
   			  <div class="header">

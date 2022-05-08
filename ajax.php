@@ -70,6 +70,13 @@ if($action == "save_product"){
 	if($save)
 		echo $save;
 }
+
+if($action == "edit_product"){
+	$save = $crud->edit_product();
+	if($save)
+		echo $save;
+}
+
 if($action == "delete_product"){
 	$save = $crud->delete_product();
 	if($save)
@@ -119,4 +126,12 @@ if($action == "save_defective"){
 	if($save)
 		echo $save;
 }
+
+if($action == "delete_defective"){
+	$save = $crud->delete_defective();
+	if($save)
+		echo $save;
+}
+
+
 
