@@ -45,19 +45,23 @@
 									<option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
 								<?php endwhile; ?>
 								</select>
-							</div>
-						<div class="form-group">
+						</div>
+							<div class="form-group">
 							<label class="control-label">Product Name</label>
-							<input type="text" class="form-control" name="name" >
+							<input type="text" class="form-control" name="name">
 						</div>
 						<div class="form-group">
-							<label class="control-label">Description</label>
-							<textarea class="form-control" cols="30" rows="3" name="description"></textarea>
+							<label class="control-label">Expiration Date</label>
+							<input type="text" class="form-control" name="description">
 						</div>
 						<div class="form-group">
 							<label class="control-label">Product Price</label>
 							<input type="number" step="any" class="form-control text-right" name="price" >
-						</div>		
+						</div>
+						<div class="form-group">
+							<label class="control-label">Remarks</label>
+							<textarea class="form-control" cols="30" rows="3" value="" name="remarks"></textarea>
+						</div>			
 					</div>
 					<div class="card-footer">
 						<div class="row">
@@ -96,11 +100,12 @@
 										<p>SKU : <b><?php echo $row['sku'] ?></b></p>
 										<p><small>Category : <b><?php echo $cat_arr[$row['category_id']] ?></b></small></p>
 										<p><small>Name : <b><?php echo $row['name'] ?></b></small></p>
-										<p><small>Description : <b><?php echo $row['description'] ?></b></small></p>
+										<p><small>Exp. Date : <b><?php echo $row['description'] ?></b></small></p>
 										<p><small>Price : <b><?php echo number_format($row['price'],2) ?></b></small></p>
+										<p><small>Remarks : <b><?php echo $row['remarks'] ?></b></small></p>
 									</td>
 									<td class="text-center">
-										<button class="btn btn-sm btn-primary edit_product" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>" data-sku="<?php echo $row['sku'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-description="<?php echo $row['description'] ?>" data-price="<?php echo $row['price'] ?>" >Edit</button>
+											<button class="btn btn-sm btn-primary edit_product" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>" data-sku="<?php echo $row['sku'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-description="<?php echo $row['description'] ?>" data-price="<?php echo $row['price'] ?>" data-price="<?php echo $row['remarks'] ?>">Edit</button>
 										<button class="btn btn-sm btn-danger delete_product" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 									</td>
 								</tr>
@@ -165,6 +170,7 @@
 		cat.find("[name='category_id']").val($(this).attr('data-category_id'))
 		cat.find("[name='description']").val($(this).attr('data-description'))
 		cat.find("[name='price']").val($(this).attr('data-price'))
+		cat.find("[name='remarks']").val($(this).attr('data-remarks'))
 		end_load()
 	})
 	$('.delete_product').click(function(){
