@@ -70,17 +70,20 @@
 		<a href="index.php?page=inventory" class="nav-item nav-inventory" style="width:100%"><span class='icon-field'><i class="fa fa-list"></i></span> Inventory</a></div>
 			<button class="dropdown-btn">Manage Inventory&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
-				<a href="index.php?page=sales" class="nav-item nav-sales"><span class='icon-field'><i class="fa fa-coins"></i></span> Stock Out</a>
+				<a href="index.php?page=stock-out" class="nav-item nav-stock-out"><span class='icon-field'><i class="fa fa-coins"></i></span> Stock Out</a>
 				<a href="index.php?page=sales-return" class="nav-item nav-sales-return"><span class='icon-field'><i class="fa fa-exclamation-circle"></i></span> Defective items</a>
-				<a href="index.php?page=receiving" class="nav-item nav-receiving nav-manage_receiving"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Stock In</a>
+				<a href="index.php?page=stock-in" class="nav-item nav-stock-in"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Stock In</a>
 				</div>
+			<button class="dropdown-btn hide-btn">List Form&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
+				<div class="dropdown-container">
 				<a href="index.php?page=categories" class="nav-item nav-categories"><span class='icon-field'><i class="fa fa-list"></i></span> Category List</a>
 				<a href="index.php?page=product" class="nav-item nav-product"><span class='icon-field'><i class="fa fa-boxes"></i></span> Product List</a>
 				<a href="index.php?page=supplier" class="nav-item nav-supplier"><span class='icon-field'><i class="fa fa-truck-loading"></i></span> Supplier List</a>
 				<!--<a href="index.php?page=customer" class="nav-item nav-customer"><span class='icon-field'><i class="fa fa-user-friends"></i></span> Customer List</a>-->
+				</div>
 				<?php if($_SESSION['login_type'] == 1): ?>
 				<a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span> Users</a>
-			<?php endif; ?>                                     
+			<?php endif; ?>      
 				<a href="ajax.php?action=logout" class="nav-item nav-logout"><span class='icon-field'><i class="fa fa-power-off"></i></span> Log out</a>
 		</div>
 </nav>
@@ -110,6 +113,9 @@ for (i = 0; i < dropdown.length; i++) {
 		}
 		.nav-manage_receiving, .nav-sales-return, .nav-sales ,.nav-home ,.nav-inventory, .nav-logout{
 			display: block!important;
+		}
+		.hide-btn{
+			display: none!important;
 		}
 	</style>
 <?php endif ?>

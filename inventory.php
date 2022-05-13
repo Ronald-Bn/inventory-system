@@ -43,7 +43,7 @@
 								$def = $def && $def->num_rows > 0 ? $def->fetch_array()['def'] : 0;
 								$available = $inn - $out;
 							?>
-								<tr <?php if($available < 10){
+								<tr <?php if($available < 100){
 										echo "class='table-danger'";
 								}else if($available > 1500){
 										echo "class='table-success'";

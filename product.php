@@ -106,7 +106,7 @@
 									</td>
 									<td class="text-center">
 											<button class="btn btn-sm btn-primary edit_product" type="button" data-id="<?php echo $row['id'] ?>" data-name="<?php echo $row['name'] ?>" data-sku="<?php echo $row['sku'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-description="<?php echo $row['description'] ?>" data-price="<?php echo $row['price'] ?>" data-price="<?php echo $row['remarks'] ?>">Edit</button>
-										<button class="btn btn-sm btn-danger delete_product" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+											<a class="btn btn-sm btn-danger" href="#remove_modal"  data-toggle="modal" data-item-id="<?php echo $row['id'] ?>">Delete</a>
 									</td>
 								</tr>
 								<?php endwhile; ?>
@@ -120,6 +120,27 @@
 	</div>	
 
 </div>
+
+<div class="modal" id="remove_modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><b>Confirmation</b></h4>
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      		</div>
+      	<div class="modal-body">
+			  <form action="" id="delete-product">
+				  <input type="hidden" name="id" id="id" class="col-md-12"/>
+				  <p>Are you sure to delete this data?</p>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-primary">Confirm</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+			</form>
+    </div>
+  </div>
+</div>
 <style>
 	
 	td{
@@ -130,6 +151,12 @@
 	}
 </style>
 <script>
+	$('#remove_modal').on('show.bs.modal', function(e) {
+    var bookId = $(e.relatedTarget).data('item-id');
+    $(e.currentTarget).find('input[name="id"]').val(bookId);
+	});
+
+
 	$('table').dataTable()
 	$('#manage-product').submit(function(e){
 		e.preventDefault()
@@ -173,24 +200,27 @@
 		cat.find("[name='remarks']").val($(this).attr('data-remarks'))
 		end_load()
 	})
-	$('.delete_product').click(function(){
-		_conf("Are you sure to delete this product?","delete_product",[$(this).attr('data-id')])
-	})
-	function delete_product($id){
-		start_load()
-		$.ajax({
+	$('#delete-product').submit(function(e){
+			e.preventDefault()
+			start_load()
+			$.ajax({
 			url:'ajax.php?action=delete_product',
-			method:'POST',
-			data:{id:$id},
+			data: new FormData($(this)[0]),
+			cache: false,
+		    contentType: false,
+		    processData: false,
+		    method: 'POST',
+		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
 					alert_toast("Data successfully deleted",'success')
 					setTimeout(function(){
 						location.reload()
 					},1500)
-
+				}else{
+					alert_toast("Something wrong",'danger')
 				}
 			}
 		})
-	}
+	})
 </script>

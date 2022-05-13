@@ -142,16 +142,16 @@ if(isset($_GET['id'])){
 	<table>
 	<tr class="item-row">
 		<td>
-			<input type="hidden" name="inv_id[]" value="">
-			<input type="hidden" name="product_id[]" value="">
+			<input type="hidden" name="inv_id" value="">
+			<input type="hidden" name="product_id" value="">
 			<p class="pname">Name: <b>product</b></p>
 			<p class="pdesc"><small><i>Description: <b>Description</b></i></small></p>
 		</td>
 		<td>
-			<input type="number" min="1" step="any" name="qty[]" value="" class="text-right">
+			<input type="number" min="1" step="any" name="qty" value="" class="text-right">
 		</td>
 		<td>
-			<input type="number" min="1" step="any" name="price[]" value="" class="text-right">
+			<input type="number" min="1" step="any" name="price" value="" class="text-right">
 		</td>
 		<td>
 			<p class="amount text-right"></p>
@@ -220,9 +220,9 @@ if(isset($_GET['id'])){
 		tr.attr('data-id',product)
 		tr.find('.pname b').html($("#product option[value='"+product+"']").attr('data-name'))
 		tr.find('.pdesc b').html($("#product option[value='"+product+"']").attr('data-description'))
-		tr.find('[name="product_id[]"]').val(product)
-		tr.find('[name="qty[]"]').val(qty)
-		tr.find('[name="price[]"]').val(price)
+		tr.find('[name="product_id"]').val(product)
+		tr.find('[name="qty"]').val(qty)
+		tr.find('[name="price"]').val(price)
 		var amount = parseFloat(price) * parseFloat(qty);
 		tr.find('.amount').html(parseFloat(amount).toLocaleString('en-US',{style:'decimal',maximumFractionDigits:2,minimumFractionDigits:2}))
 		$('#list tbody').append(tr)
@@ -241,7 +241,7 @@ if(isset($_GET['id'])){
 		var total = 0;
 		$('#list tbody').find('.item-row').each(function(){
 			var _this = $(this).closest('tr')
-		var amount = parseFloat(_this.find('[name="qty[]"]').val()) * parseFloat(_this.find('[name="price[]"]').val());
+		var amount = parseFloat(_this.find('[name="qty"]').val()) * parseFloat(_this.find('[name="price"]').val());
 		amount = amount > 0 ? amount :0;
 		_this.find('p.amount').html(parseFloat(amount).toLocaleString('en-US',{style:'decimal',maximumFractionDigits:2,minimumFractionDigits:2}))
 		total+=parseFloat(amount);
@@ -258,7 +258,7 @@ if(isset($_GET['id'])){
 			return false;
 		}
 		$.ajax({
-			url:'ajax.php?action=save_receiving',
+			url:'ajax.php?action=save_stockin',
 		    method: 'POST',
 		    data: $(this).serialize(),
 			success:function(resp){
@@ -267,9 +267,7 @@ if(isset($_GET['id'])){
 					setTimeout(function(){
 						location.href = "index.php?page=receiving"
 					},1500)
-
 				}
-				
 			}
 		})
 	})

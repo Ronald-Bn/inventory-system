@@ -16,10 +16,10 @@
 						<table class="table table-bordered" id="tblInventories">
 							<thead>
 								<th class="wborder text-center">#</th>
-								<th class="wborder text-center">SKU</th>
 								<th class="wborder text-center">Product</th>
-								<th class="wborder text-center">Data Purchase</th>
-								<th class="wborder text-center">Quantity</th>
+								<th class="wborder text-center">Qty</th>
+								<th class="wborder text-center">Date</th>
+								<th class="wborder text-center">Date Purchase</th>
                                 <th class="wborder text-center">Remarks</th>
 								<th class="wborder text-center hide-table">Action</th>
 							</thead>
@@ -32,15 +32,15 @@
 									$cus_arr[0] = "GUEST";
 
 								$i = 1;
-								$sales = $conn->query("SELECT * FROM defective_list  order by date_purchase desc");
+								$sales = $conn->query("SELECT * FROM defective_list  order by date_updated desc");
 								while($row=$sales->fetch_assoc()):
 							?>
 								<tr>
 									<td class="wborder text-center"><?php echo $i++ ?></td>
-									<td class="wborder"><?php echo $row['sku']?></td>
 									<td class="wborder"><?php echo $row['product_name']?></td>
-									<td class="wborder text-right"><?php echo $row['date_purchase']?></td>
 									<td class="wborder text-right"><?php echo $row['qty']?></td>
+									<td class="wborder text-right"><?php echo date("m/d/Y",strtotime($row['date_updated'])) ?></td>
+									<td class="wborder text-right"><?php echo $row['date_purchase']?></td>
 									<td class="wborder text-center"><?php echo $row['remarks']?></td>
 									<td class="wborder text-center hide-table">
 										<a class="btn btn-sm btn-primary" href="#my_modal" data-toggle="modal" data-item-id="<?php echo $row['id']?>|<?php echo $row['sku']?>|<?php echo $row['product_id']?>|<?php echo $row['product_name']?>|<?php echo $row['qty']?>|<?php echo $row['date_purchase']?>|<?php echo $row['remarks']?>">Edit</a>

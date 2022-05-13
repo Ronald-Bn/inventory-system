@@ -244,6 +244,7 @@ Class Action {
 				$data .= ", stock_from = 'receiving' ";
 				$details = json_encode(array('price'=>$price[$k],'qty'=>$qty[$k]));
 				$data .= ", other_details = '$details' ";
+				$data .= ", ref_no = '$ref_no' ";
 				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
 
 				$save2[]= $this->db->query("INSERT INTO inventory set ".$data);
@@ -274,14 +275,6 @@ Class Action {
 				return 1;
 			}
 		}
-	}
-
-	function delete_receiving(){
-		extract($_POST);
-		$del1 = $this->db->query("DELETE FROM receiving_list where id = $id ");
-		$del2 = $this->db->query("DELETE FROM inventory where type = 1 and form_id = $id ");
-		if($del1 && $del2)
-			return 1;
 	}
 
 	function save_customer(){
@@ -380,14 +373,7 @@ Class Action {
 			}
 		}
 	}
-	function delete_sales(){
-		extract($_POST);
-		$del1 = $this->db->query("DELETE FROM sales_list where id = $id ");
-		$del2 = $this->db->query("DELETE FROM inventory where type = 2 and form_id = $id ");
-		if($del1 && $del2)
-			return 1;
-	}
-
+	
 	function save_defective(){
 		extract($_POST);
 		list($sku, $product_id, $product_name) = explode("|", $product);
@@ -416,4 +402,164 @@ Class Action {
 		if($del1)
 			return 1;
 	}
+
+	//Save Stock In
+	function save_stockin(){
+		extract($_POST);
+		$data = " supplier_id = '$supplier_id' ";
+		$data .= ", total_amount = '0' ";
+		$supp = $supplier_id;
+		
+		if(empty($id)){
+			$ref_no = sprintf("%'.08d\n", $ref_no);
+			$i = 1;
+	
+			while($i == 1){
+				$chk = $this->db->query("SELECT * FROM receiving_list where ref_no ='$ref_no'")->num_rows;
+				if($chk > 0){
+					$ref_no = mt_rand(1,99999999);
+					$ref_no = sprintf("%'.08d\n", $ref_no);
+				}else{
+					$i=0;
+				}
+			}
+				$data = " id = '$id' ";
+				$data .= ", supplier_id = '$supp' ";
+				$data .= ", product_id = '$product_id' ";
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '1' ";
+				$data .= ", stock_from = 'receiving' ";
+				$details = json_encode(array('price'=>'0','qty'=>$qty));
+				$data .= ", other_details = '$details' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
+	
+				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
+				
+			if(isset($save2)){
+				return 1;
+			}
+		}
+	}
+
+	//Edit Stock In
+	function edit_stockin(){
+		extract($_POST);
+		
+		if(!empty($id)){
+
+				$data = " id = '$id' ";
+				if(!empty($supplier_id) ){
+					$data .= ", supplier_id = '$supplier_id' ";
+				}
+				if(!empty($product_id) ){
+					$data .= ", product_id = '$product_id' ";
+				}
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '1' ";
+				$data .= ", stock_from = 'receiving' ";
+				$details = json_encode(array('price'=>'0','qty'=>$qty));
+				$data .= ", other_details = '$details' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
+	
+				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
+				
+			if(isset($save2)){
+				return 1;
+			}
+		}
+	}
+
+	function delete_stockin(){
+		extract($_POST);
+		$del2 = $this->db->query("DELETE FROM inventory where type = 1 and id = $id ");
+		if($del2)
+			return 1;
+	}
+
+
+	//Save Stock Out
+	function save_stockout(){
+		extract($_POST);
+	
+		$inn = $this->db->query("SELECT sum(qty) as inn FROM inventory where type = 1 and product_id = ".$product_id);
+		$inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
+		$out = $this->db->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$product_id);
+		$out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
+		$available = $inn - $out;
+
+		$check = $available - $qty;
+		if($check < 0){
+			return 2;
+		}else{
+			$ref_no = sprintf("%'.08d\n", $ref_no);
+			$i = 1;
+	
+			while($i == 1){
+				$chk = $this->db->query("SELECT * FROM receiving_list where ref_no ='$ref_no'")->num_rows;
+				if($chk > 0){
+					$ref_no = mt_rand(1,99999999);
+					$ref_no = sprintf("%'.08d\n", $ref_no);
+				}else{
+					$i=0;
+				}
+			}
+				$data = " id = '$id' ";
+				$data .= ", users_id = '$users_id' ";
+				$data .= ", product_id = '$product_id' ";
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '2' ";
+				$data .= ", stock_from = 'stockout' ";
+				$details = json_encode(array('price'=>'0','qty'=>$qty));
+				$data .= ", other_details = '$details' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = 'Stock from stock out-".$ref_no."' ";
+	
+				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
+				
+			if(isset($save2)){
+				return 1;
+			}
+		}
+	}
+
+	//Edit Stock Out
+	function edit_stockout(){
+		extract($_POST);
+		
+		if(!empty($id)){
+
+				$data = " id = '$id' ";
+				if(!empty($users_id) ){
+					$data .= ", users_id = '$users_id' ";
+				}
+				if(!empty($product_id) ){
+					$data .= ", product_id = '$product_id' ";
+				}
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '2' ";
+				$data .= ", stock_from = 'stockout' ";
+				$details = json_encode(array('price'=>'0','qty'=>$qty));
+				$data .= ", other_details = '$details' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
+	
+				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
+				
+			if(isset($save2)){
+				return 1;
+			}
+		}
+	}
+
+	//Delete Stock Out
+	function delete_stockout(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM inventory where type = 2 and id = $id ");
+		if($delete){
+			return 1;
+		}
+	}
+
 }
