@@ -157,6 +157,13 @@ if($action == "delete_stockout"){
 		echo $save;
 }
 
+//restart attempts
+if($action == "restart_attempts"){
+	$save = $crud->restart_attempts();
+	if($save)
+		echo $save;
+}
+
 
 
 

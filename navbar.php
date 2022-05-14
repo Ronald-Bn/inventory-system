@@ -116,7 +116,7 @@ for (i = 0; i < dropdown.length; i++) {
 		.nav-item{
 			display: none!important;
 		}
-		.nav-manage_receiving, .nav-sales-return, .nav-sales ,.nav-home ,.nav-inventory, .nav-logout{
+		.nav-stock-in, .nav-defective-item, .nav-stock-out ,.nav-home ,.nav-inventory, .nav-logout{
 			display: block!important;
 		}
 		.hide-btn{

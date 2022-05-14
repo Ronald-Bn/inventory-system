@@ -423,6 +423,7 @@ Class Action {
 					$i=0;
 				}
 			}
+			
 				$data = " id = '$id' ";
 				$data .= ", users_id = '$users_id' ";
 				$data .= ", product_id = '$product_id' ";
@@ -472,6 +473,14 @@ Class Action {
 		if($delete){
 			return 1;
 		}
+	}
+
+	function restart_attempts(){
+		extract($_POST);
+		$data = " attempts = '1' ";
+		$del2 = $this->db->query("UPDATE tblattempts set ".$data." where id=".$id);
+		if($del2)
+			return 1;
 	}
 
 }

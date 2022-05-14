@@ -8,18 +8,6 @@ session_start();
 if(isset($_SESSION['login_id']))
 header("location:index.php?page=home");
 
-if(isset($_SESSION["locked"])){
-	header("Refresh: 0;"); 
-	$difference = time() - $_SESSION["locked"];
-	echo $difference;
-	if($difference > 10){
-		$save = $conn->query("UPDATE tblattempts set attempts = 0 where id = '1'");
-		unset($_SESSION["locked"]);
-		unset($_SESSION["error"]);
-		}
-}
-
-$_SESSION["login_attempts"] = 0;
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$username = $_POST["username"];
 	$password = $_POST["password"];
@@ -134,7 +122,9 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 							while($row=$qry->fetch_assoc()):
 								if($row['attempts'] > 3){
 									$_SESSION["locked"] = time(); 
-									echo "Please wait for 5 minutes";
+									print 'Please wait for <div id="some_div">
+									</div>';
+									unset($_SESSION["error"]);
 								}
 								 else {
 								  ?>
@@ -151,10 +141,34 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
 <script>
-	window.addEventListener('load', (event) => {
-		document.cookie = "test1=Hello; SameSite=None; Secure";
-		document.cookie = "test2=World; SameSite=None; Secure";
-	});
+	var timeLeft = 30;
+    var elem = document.getElementById('some_div');
+    
+    var timerId = setInterval(countdown, 1000);
+	
+    
+    function countdown() {
+      if (timeLeft == -1) {
+        clearTimeout(timerId);
+		var id = 1;
+		$.ajax({
+			url:'ajax.php?action=restart_attempts',
+		    method	: 'POST',
+		    data: { id: 1},
+			success:function(resp){
+				if(resp==1){
+					setTimeout(function(){
+						location.href = "login.php"
+					},0)
+				}
+			}
+		})	
+
+      } else {
+        elem.innerHTML = timeLeft + ' seconds remaining';
+        timeLeft--;
+      }
+    }
 </script>
 </body>
 </html>
