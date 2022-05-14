@@ -48,7 +48,7 @@
 									<td class="wborder txt-cen"><?php echo $row['ref_no'] ?></td>
 									<td class="wborder"><?php echo isset($sup_arr[$row['supplier_id']]) ? $sup_arr[$row['supplier_id']] :'N/A' ?></td>
 									<td class="wborder text-center hide-table">
-										<a class="btn btn-sm btn-primary" href="#edit_modal_stock_in"  data-toggle="modal" data-item-id="<?php echo $row['id'] ?>" data-supplier-id="<?php echo $sup_arr[$row['supplier_id']] ?>" data-product-id="<?php echo $pro_arr[$row['product_id']] ?>" data-qty-id="<?php echo $row['qty'] ?>" data-ref-id="<?php echo $row['ref_no'] ?>">Edit</a>
+										<a class="btn btn-sm btn-primary" href="#edit_modal_stock_in"  data-toggle="modal" data-item-id="<?php echo $row['id'] ?>" data-supplier-id="<?php echo $sup_arr[$row['supplier_id']] ?>" data-product-id="<?php echo $pro_arr[$row['product_id']] ?>" data-qty-id="<?php echo $row['qty'] ?>" data-ref-id="<?php echo $row['ref_no'] ?>" data-date_expiration-id="<?php echo $row['date_expiration'] ?>">Edit</a>
 										<a class="btn btn-sm btn-danger" href="#remove_modal"  data-toggle="modal" data-item-id="<?php echo $row['id'] ?>">Delete</a>
 									</td>
 								</tr>
@@ -79,6 +79,7 @@
 	var product_Id = $(e.relatedTarget).data('product-id');
 	var qty_Id = $(e.relatedTarget).data('qty-id');
 	var ref_Id = $(e.relatedTarget).data('ref-id');
+	var date_expiration_Id = $(e.relatedTarget).data('date_expiration-id');
 	$('.supplier').select2({
 	 	placeholder: supplier_Id,
 	 	width:"100%"
@@ -90,6 +91,7 @@
     $(e.currentTarget).find('input[name="id"]').val(item_Id);
 	$(e.currentTarget).find('input[name="qty"]').val(qty_Id);
 	$(e.currentTarget).find('input[name="ref_no"]').val(ref_Id);
+	$(e.currentTarget).find('input[name="date_expiration"]').val(date_expiration_Id);
 	});
 	
 	$('table').dataTable()
@@ -123,9 +125,10 @@
 
 			var product = $('#product_sin').val(),
 			qty = $('#qty_sin').val(),
+			date = $('#date_expiration_sin').val(),
 			supplier = $('#supplier_sin').val();
 
-			if(product == '' || qty == '' || supplier ==''){
+			if(product == '' || qty == '' || supplier =='' || date ==''){
 				end_load()
 				alert_toast("Please complete the fields first",'danger')
 				return;
@@ -155,11 +158,18 @@
 			e.preventDefault()
 			start_load()
 
-			var qty = $('#qty_ein').val()
+			var qty = $('#qty_ein').val(),
+			date = $('#date_expiration_ein').val();
+
+			if(date == ''){
+				end_load()
+				alert_toast("Expiration Date field is Empty",'danger')
+				return;
+			}
 
 			if(qty == ''){
 				end_load()
-				alert_toast("Quantity field is empty",'danger')
+				alert_toast("Quantity field is Empty",'danger')
 				return;
 			}
 			if(parseInt(qty) <= 0){

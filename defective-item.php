@@ -167,6 +167,22 @@
 	$('#edit-defective').submit(function(e){
 			e.preventDefault()
 			start_load()
+
+			var qty = $('#qty_edef').val(),
+			date = $('#date_purchase_edef').val(),
+			remarks = $('#remarks_edef').val();
+
+			if(qty == '' || remarks =='' || date ==''){
+				end_load()
+				alert_toast("Please complete the fields first",'danger')
+				return false;
+			}
+			if(parseInt(qty) <= 0 ){
+				end_load()
+				alert_toast("Please Increase the Quantity",'danger')
+				return false;
+			}
+			
 			$.ajax({
 			url:'ajax.php?action=edit_defective',
 		    method	: 'POST',

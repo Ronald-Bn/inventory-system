@@ -351,6 +351,7 @@ Class Action {
 				$data .= ", type = '1' ";
 				$data .= ", stock_from = 'stockin' ";
 				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", date_expiration = '$date_expiration' ";
 
 				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
 				
@@ -377,6 +378,8 @@ Class Action {
 				$data .= ", type = '1' ";
 				$data .= ", stock_from = 'stockin' ";
 				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", date_expiration = '$date_expiration' ";
+
 	
 				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
 				

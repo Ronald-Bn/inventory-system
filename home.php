@@ -10,7 +10,6 @@
   if(!isset($_SESSION['login_id'])){
   header('location:login.php');
 }
-  echo $_SESSION['login_id'];
    date_default_timezone_set('Asia/Manila');
     $i = 1;
     $cat = $conn->query("SELECT * FROM category_list order by name asc");

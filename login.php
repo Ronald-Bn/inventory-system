@@ -2,13 +2,6 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Red Camia Inventory System</title>
- 	
-
-<?php include('./header.php'); ?>
 <?php include('./db_connect.php'); ?>
 <?php 
 session_start();
@@ -16,6 +9,7 @@ if(isset($_SESSION['login_id']))
 header("location:index.php?page=home");
 
 if(isset($_SESSION["locked"])){
+	header("Refresh: 0;"); 
 	$difference = time() - $_SESSION["locked"];
 	echo $difference;
 	if($difference > 10){
@@ -47,6 +41,13 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 				$_SESSION['setting_'.$key] = $value;
 		}
 ?>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Red Camia Inventory System</title>
+ 	
+
+<?php include('./header.php'); ?>
 
 </head>
 <style>
@@ -149,6 +150,11 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
-
+<script>
+	window.addEventListener('load', (event) => {
+		document.cookie = "test1=Hello; SameSite=None; Secure";
+		document.cookie = "test2=World; SameSite=None; Secure";
+	});
+</script>
 </body>
 </html>

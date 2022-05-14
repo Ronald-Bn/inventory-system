@@ -8,7 +8,7 @@
       		</div>
       	<div class="modal-body">
 			  <form action="" id="delete-stockin">
-				  <input type="text" name="id" id="id" class="col-md-12"/>
+				  <input type="hidden" name="id" id="id" class="col-md-12"/>
 				  <p>Are you sure to delete this data?</p>
 		</div>
 		<div class="modal-footer">
@@ -63,6 +63,15 @@
 				<?php endwhile; ?>
 			</select>
 		  </div>
+		  <div class="col-md-8 pt-3">
+				<label class="control-label">Expiration Date (MM/DD/YYYY)</label>
+					<div class="input-group date" data-provide="datepicker">
+						<input type="text" class="form-control" name="date_expiration" id="date_expiration_sin" autocomplete="off">
+								<div class="input-group-addon">
+								<span class="glyphicon glyphicon-th"></span>
+								</div>
+					</div>
+				</div>
 		  
 		  <div class="col-md-4 pt-2 float-right">
 			<label>Qty</label>
@@ -88,10 +97,10 @@
       </div>
       <div class="modal-body">
 		  <form action="" id="edit-stockin">	
-			<input type="text" name="id" class="col-md-12"/>
+			<input type="hidden" name="id" class="col-md-12"/>
             <div class="col-md-4 pt-2 ">
 			<label>Reference No.</label>
-			<input type="text" name="ref_no">
+			<input type="text" name="ref_no" readonly="readonly">
 		  </div>
 		  <div class="col-md-12 pt-1">
 			<label>Supplier</label>
@@ -121,6 +130,10 @@
 				<?php endwhile; ?>
 			</select>
 		  </div>
+		  <div class="col-md-8 pt-3">
+				<label class="control-label">Expiration Date (MM/DD/YYYY)</label>
+					<input type="text" class="form-control" name="date_expiration" id="date_expiration_ein" autocomplete="off">
+			</div>
 		  
 		  <div class="col-md-4 pt-2 float-right">
 			<label>Qty</label>
@@ -206,7 +219,7 @@
 			<input type="hidden" name="id" class="col-md-12"/>
 			<div class="col-md-4 pt-2 ">
 			<label>Reference No.</label>
-			<input type="text" name="ref_no">
+			<input type="text" name="ref_no" readonly="readonly">
 		  </div>
 		  <div class="col-md-12 pt-1">
 			<label>Clerk</label>
@@ -264,7 +277,7 @@
       		</div>
       	<div class="modal-body">
 			  <form action="" id="delete-stockout">
-				  <input type="text" name="id" id="id" class="col-md-12"/>
+				  <input type="hidden" name="id" id="id" class="col-md-12"/>
 				  <p>Are you sure to delete this data?</p>
 		</div>
 		<div class="modal-footer">
@@ -344,10 +357,10 @@
       </div>
       <div class="modal-body">
 		  <form action="" id="edit-defective">	
-			<input type="text" name="id" class="col-md-12"/>
+			<input type="hidden" name="id" class="col-md-12"/>
 			<div class="col-md-4 pt-2 ">
 			<label>Reference No.</label>
-			<input type="text" name="ref_no">
+			<input type="text" name="ref_no" readonly="readonly">
 		  </div>
 		  <div class="col-md-12 pt-2">
 			<label>Product</label>
@@ -368,15 +381,15 @@
 		  </div>
 		<div class="col-md-12 pt-2">
 			<label>Remarks</label>
-			<textarea class="form-control" cols="30" rows="3" value="" name="remarks"></textarea>
+			<textarea class="form-control" cols="30" rows="3" value="" name="remarks" id="remarks_edef"></textarea>
 		  </div>
 		<div class="col-md-8 pt-2">
 				<label class="control-label">Date Purchase (MM/DD/YYYY)</label>
-				<input type="text" class="form-control" name="date_purchase" id="datepicker">	
+				<input type="text" class="form-control" name="date_purchase" id="date_purchase_edef">	
 				</div>
 			<div class="col-md-4 pt-2 float-right">
 				<label>Qty</label>
-				<input type="number" name="qty" id="qty" value=""  class="col-md-12 text-center" />
+				<input type="number" name="qty" id="qty_edef" value=""  class="col-md-12 text-center" />
 			</div>
 		</div>
 		
@@ -390,7 +403,7 @@
 </div>
 
 
-<!--remove stock in modal-->
+<!--remove defective modal-->
 <div class="modal" id="remove_defective_modal">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -400,7 +413,7 @@
       		</div>
       	<div class="modal-body">
 			  <form action="" id="delete-defective">
-				  <input type="text" name="id" id="id" class="col-md-12"/>
+				  <input type="hidden" name="id" id="id" class="col-md-12"/>
 				  <p>Are you sure to delete this data?</p>
 		</div>
 		<div class="modal-footer">
