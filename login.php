@@ -17,11 +17,12 @@ header("location:index.php?page=home");
 
 if(isset($_SESSION["locked"])){
 	$difference = time() - $_SESSION["locked"];
+	echo $difference;
 	if($difference > 10){
 		$save = $conn->query("UPDATE tblattempts set attempts = 0 where id = '1'");
 		unset($_SESSION["locked"]);
 		unset($_SESSION["error"]);
-		};
+		}
 }
 
 $_SESSION["login_attempts"] = 0;

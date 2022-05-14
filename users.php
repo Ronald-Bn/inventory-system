@@ -32,13 +32,13 @@
  					while($row= $users->fetch_assoc()):
 				 ?>
 				 <tr>
-				 	<td>
+				 	<td class="text-center">
 				 		<?php echo $i++ ?>
 				 	</td>
-				 	<td>
+				 	<td class="text-center">
 				 		<?php echo $row['name'] ?>
-				 	</td>
-				 	<td>
+				 	</td >
+				 	<td class="text-center">
 				 		<?php echo $row['username'] ?>
 				 	</td>
 				 	<td>

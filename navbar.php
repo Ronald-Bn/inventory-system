@@ -71,7 +71,7 @@
 			<button class="dropdown-btn">Manage Inventory&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
 				<a href="index.php?page=stock-out" class="nav-item nav-stock-out"><span class='icon-field'><i class="fa fa-coins"></i></span> Stock Out</a>
-				<a href="index.php?page=sales-return" class="nav-item nav-sales-return"><span class='icon-field'><i class="fa fa-exclamation-circle"></i></span> Defective items</a>
+				<a href="index.php?page=defective-item" class="nav-item nav-defective-item"><span class='icon-field'><i class="fa fa-exclamation-circle"></i></span> Defective items</a>
 				<a href="index.php?page=stock-in" class="nav-item nav-stock-in"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Stock In</a>
 				</div>
 			<button class="dropdown-btn hide-btn">List Form&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
@@ -93,7 +93,12 @@
 <script>
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
+var stockout = $('nav-stock-out').hasClass('active');
+var nav_defective = document.getElementsByClassName("nav-defective-item");
+var stocki = document.getElementsByClassName("nav-stock-in");
+
 var i;
+
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
     this.classList.toggle("active");

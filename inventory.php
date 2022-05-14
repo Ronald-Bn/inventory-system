@@ -39,9 +39,9 @@
 								$inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
 								$out = $conn->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$row['id']);
 								$out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
-								$def = $conn->query("SELECT sum(qty) as `def` FROM defective_list where type = 3 and product_id = ".$row['id']);
+								$def = $conn->query("SELECT sum(qty) as `def` FROM inventory where type = 3 and product_id = ".$row['id']);
 								$def = $def && $def->num_rows > 0 ? $def->fetch_array()['def'] : 0;
-								$available = $inn - $out;
+								$available = $inn - $out - $def;
 							?>
 								<tr <?php if($available < 100){
 										echo "class='table-danger'";

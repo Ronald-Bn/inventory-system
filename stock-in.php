@@ -10,9 +10,7 @@
 							<div class="col-6"><h2><b>Stock In</b></h2></div>
 							<div class="col-6">
 								<button class="col-md-2 float-right btn btn-primary btn-sm active" id="print-stockin">Print <i class="fa fa-print"></i></button>
-								<button class="col-md-4 float-right btn btn-primary btn-sm" href="#insert_modal_stock_in"  data-toggle="modal">New Stock <i class="fa fa-plus"></i></button></div>
-							<!--<button class="col-md-4 float-right btn btn-primary btn-sm" id="new_receiving" style="display:none;">New Stock <i class="fa fa-plus"></i></button></div>-->
-								
+								<button class="col-md-4 float-right btn btn-primary btn-sm" href="#insert_modal_stock_in"  data-toggle="modal">New Stock <i class="fa fa-plus"></i></button></div>	
 						</div>
 					</div>
 					<div class="card-body"  id="print_stockin">
@@ -122,6 +120,22 @@
 	$('#save-stockin').submit(function(e){
 			e.preventDefault()
 			start_load()
+
+			var product = $('#product_sin').val(),
+			qty = $('#qty_sin').val(),
+			supplier = $('#supplier_sin').val();
+
+			if(product == '' || qty == '' || supplier ==''){
+				end_load()
+				alert_toast("Please complete the fields first",'danger')
+				return;
+			}
+			if(parseInt(qty) <= 0){
+				end_load()
+				alert_toast("Please Increase the Quantity",'danger')
+				return ;
+			}
+
 			$.ajax({
 			url:'ajax.php?action=save_stockin',
 		    method	: 'POST',
@@ -140,6 +154,20 @@
 	$('#edit-stockin').submit(function(e){
 			e.preventDefault()
 			start_load()
+
+			var qty = $('#qty_ein').val()
+
+			if(qty == ''){
+				end_load()
+				alert_toast("Quantity field is empty",'danger')
+				return;
+			}
+			if(parseInt(qty) <= 0){
+				end_load()
+				alert_toast("Please Increase the Quantity",'danger')
+				return;
+			}
+
 			$.ajax({
 			url:'ajax.php?action=edit_stockin',
 		    method	: 'POST',

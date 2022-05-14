@@ -123,13 +123,18 @@
 			e.preventDefault()
 			start_load()
 
-			var product = $('#product').val(),
-			qty = $('#qty').val(),
-			users = $('#users').val();
+			var product = $('#product_sout').val(),
+			qty = $('#qty_sout').val(),
+			users = $('#users_sout').val();
 
 			if(product == '' || qty == '' || users ==''){
 				end_load()
 				alert_toast("Please complete the fields first",'danger')
+				return false;
+			}
+			if(parseInt(qty) <= 0 ){
+				end_load()
+				alert_toast("Please Increase the Quantity",'danger')
 				return false;
 			}
 			$.ajax({
@@ -154,11 +159,16 @@
 	$('#edit-stockout').submit(function(e){
 			e.preventDefault()
 			start_load()
-			var qty = $('#qty').val();
+			var qty = $('#qty_eout').val();
 
 			if(qty == ''){
 				end_load()
 				alert_toast("Quantity field is empty",'danger')
+				return false;
+			}
+			if(parseInt(qty) <= 0 ){
+				end_load()
+				alert_toast("Please Increase the Quantity",'danger')
 				return false;
 			}
 			$.ajax({

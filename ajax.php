@@ -94,30 +94,21 @@ if($action == "delete_customer"){
 		echo $save;
 }
 
-if($action == "chk_prod_availability"){
-	$save = $crud->chk_prod_availability();
-	if($save)
-		echo $save;
-}
-
-if($action == "save_sales"){
-	$save = $crud->save_sales();
-	if($save)
-		echo $save;
-}
-
-if($action == "delete_sales"){
-	$save = $crud->delete_sales();
-	if($save)
-		echo $save;
-}
-
+//save-defective
 if($action == "save_defective"){
 	$save = $crud->save_defective();
 	if($save)
 		echo $save;
 }
 
+//edit-defective
+if($action == "edit_defective"){
+	$save = $crud->edit_defective();
+	if($save)
+		echo $save;
+}
+
+//delete-defective
 if($action == "delete_defective"){
 	$save = $crud->delete_defective();
 	if($save)

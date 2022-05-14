@@ -215,68 +215,6 @@ Class Action {
 			return 1;
 	}
 
-	function save_receiving(){
-		extract($_POST);
-		$data = " supplier_id = '$supplier_id' ";
-		$data .= ", total_amount = '$tamount' ";
-		
-		if(empty($id)){
-			$ref_no = sprintf("%'.08d\n", $ref_no);
-			$i = 1;
-
-			while($i == 1){
-				$chk = $this->db->query("SELECT * FROM receiving_list where ref_no ='$ref_no'")->num_rows;
-				if($chk > 0){
-					$ref_no = mt_rand(1,99999999);
-					$ref_no = sprintf("%'.08d\n", $ref_no);
-				}else{
-					$i=0;
-				}
-			}
-			$data .= ", ref_no = '$ref_no' ";
-			$save = $this->db->query("INSERT INTO receiving_list set ".$data);
-			$id =$this->db->insert_id;
-			foreach($product_id as $k => $v){
-				$data = " form_id = '$id' ";
-				$data .= ", product_id = '$product_id[$k]' ";
-				$data .= ", qty = '$qty[$k]' ";
-				$data .= ", type = '1' ";
-				$data .= ", stock_from = 'receiving' ";
-				$details = json_encode(array('price'=>$price[$k],'qty'=>$qty[$k]));
-				$data .= ", other_details = '$details' ";
-				$data .= ", ref_no = '$ref_no' ";
-				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
-
-				$save2[]= $this->db->query("INSERT INTO inventory set ".$data);
-			}
-			if(isset($save2)){
-				return 1;
-			}
-		}else{
-			$save = $this->db->query("UPDATE receiving_list set ".$data." where id =".$id);
-			$ids = implode(",",$inv_id);
-			$this->db->query("DELETE FROM inventory where type = 1 and form_id ='$id' and id NOT IN (".$ids.") ");
-			foreach($product_id as $k => $v){
-				$data = " form_id = '$id' ";
-				$data .= ", product_id = '$product_id[$k]' ";
-				$data .= ", qty = '$qty[$k]' ";
-				$data .= ", type = '1' ";
-				$data .= ", stock_from = 'receiving' ";
-				$details = json_encode(array('price'=>$price[$k],'qty'=>$qty[$k]));
-				$data .= ", other_details = '$details' ";
-				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
-				if(!empty($inv_id[$k])){
-									$save2[]= $this->db->query("UPDATE inventory set ".$data." where id=".$inv_id[$k]);
-				}else{
-					$save2[]= $this->db->query("INSERT INTO inventory set ".$data);
-				}
-			}
-			if(isset($save2)){
-				return 1;
-			}
-		}
-	}
-
 	function save_customer(){
 		extract($_POST);
 		$data = " name = '$name' ";
@@ -298,31 +236,25 @@ Class Action {
 			return 1;
 	}
 
-	function chk_prod_availability(){
+	//Save Defective
+	function save_defective(){
 		extract($_POST);
-		$price = $this->db->query("SELECT * FROM product_list where id = ".$id)->fetch_assoc()['price'];
-		$inn = $this->db->query("SELECT sum(qty) as inn FROM inventory where type = 1 and product_id = ".$id);
+
+		$inn = $this->db->query("SELECT sum(qty) as inn FROM inventory where type = 1 and product_id = ".$product_id);
 		$inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
-		$out = $this->db->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$id);
+		$out = $this->db->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$product_id);
 		$out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
 		$available = $inn - $out;
-		return json_encode(array('available'=>$available,'price'=>$price));
 
-	}
-
-	function save_sales(){
-		extract($_POST);
-		$data = " customer_id = '$customer_id' ";
-		$data .= ", total_amount = '0' ";
-		$data .= ", amount_tendered = '0' ";
-		$data .= ", amount_change = '0' ";
-		
-		if(empty($id)){
+		$check = $available - $qty;
+		if($check < 0){
+			return 2;
+		}else{
 			$ref_no = sprintf("%'.08d\n", $ref_no);
 			$i = 1;
-
+	
 			while($i == 1){
-				$chk = $this->db->query("SELECT * FROM sales_list where ref_no ='$ref_no'")->num_rows;
+				$chk = $this->db->query("SELECT * FROM inventory where ref_no ='$ref_no'")->num_rows;
 				if($chk > 0){
 					$ref_no = mt_rand(1,99999999);
 					$ref_no = sprintf("%'.08d\n", $ref_no);
@@ -330,75 +262,67 @@ Class Action {
 					$i=0;
 				}
 			}
-			$data .= ", ref_no = '$ref_no' ";
-			$save = $this->db->query("INSERT INTO sales_list set ".$data);
-			$id =$this->db->insert_id;
-			foreach($product_id as $k => $v){
-				$data = " form_id = '$id' ";
-				$data .= ", product_id = '$product_id[$k]' ";
-				$data .= ", qty = '$qty[$k]' ";
-				$data .= ", type = '2' ";
-				$data .= ", stock_from = 'Sales' ";
-				$details = json_encode(array('price'=>$price[$k],'qty'=>$qty[$k]));
-				$data .= ", other_details = '$details' ";
-				$data .= ", remarks = 'Stock out from Sales-".$ref_no."' ";
-
-				$save2[]= $this->db->query("INSERT INTO inventory set ".$data);
-			}
-			if(isset($save2)){
-				return $id;
-			}
-		}else{
-			$save = $this->db->query("UPDATE sales_list set ".$data." where id=".$id);
-			$ids = implode(",",$inv_id);
-			$this->db->query("DELETE FROM inventory where type = 1 and form_id ='$id' and id NOT IN (".$ids.") ");
-			foreach($product_id as $k => $v){
-				$data = " form_id = '$id' ";
-				$data .= ", product_id = '$product_id[$k]' ";
-				$data .= ", qty = '$qty[$k]' ";
-				$data .= ", type = '2' ";
-				$data .= ", stock_from = 'Sales' ";
-				$details = json_encode(array('price'=>$price[$k],'qty'=>$qty[$k]));
-				$data .= ", other_details = '$details' ";
-				$data .= ", remarks = 'Stock out from Sales-".$ref_no."' ";
-
-				if(!empty($inv_id[$k])){
-					$save2[]= $this->db->query("UPDATE inventory set ".$data." where id=".$inv_id[$k]);
-				}else{
-					$save2[]= $this->db->query("INSERT INTO inventory set ".$data);
-				}
-			}
-			if(isset($save2)){
-				return $id;
-			}
-		}
-	}
+				$text = strtoupper($remarks);
+				$data = " id = '$id' ";
+				$data .= ", product_id = '$product_id' ";
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '3' ";
+				$data .= ", stock_from = 'defective' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = '$text' ";
+				$data .= ", date_purchase = '$date_purchase' ";
 	
-	function save_defective(){
-		extract($_POST);
-		list($sku, $product_id, $product_name) = explode("|", $product);
-		$up_remarks = strtoupper($remarks);
-		$data = " id = '$id'";
-		$data .= ", sku = '$sku'";
-		$data .= ", product_id = '$product_id'";
-		$data .= ", product_name = '$product_name'";
-		$data .= ", qty = '$qty'";
-		$data .= ", date_purchase = '$date_purchase'";
-		$data .= ", remarks = '$up_remarks'";
-		$data .= ", type = '3' ";
-		if(empty($id)){
-			$save = $this->db->query("INSERT INTO defective_list set ".$data);
-		}else{
-			$save = $this->db->query("UPDATE defective_list set ".$data." where id=".$id);
-		}
-		if($save){
-			return 1;
+				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
+				
+			if(isset($save2)){
+				return 1;
+			}
 		}
 	}
 
+	//Edit Defective
+	function edit_defective(){
+		extract($_POST);
+
+		$inn = $this->db->query("SELECT sum(qty) as inn FROM inventory where type = 1 and product_id = ".$product_id);
+		$inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
+		$out = $this->db->query("SELECT sum(qty) as `out` FROM inventory where type = 2 and product_id = ".$product_id);
+		$out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
+		$available = $inn - $out;
+
+		$check = $available - $qty;
+		if($check < 0){
+			return 2;
+		}
+		
+		
+		if(!empty($id)){
+
+				$data = " id = '$id' ";
+				if(!empty($product_id) ){
+					$data .= ", product_id = '$product_id' ";
+				}
+
+				$text = strtoupper($remarks);
+				$data .= ", qty = '$qty' ";
+				$data .= ", type = '3' ";
+				$data .= ", stock_from = 'defective' ";
+				$data .= ", ref_no = '$ref_no' ";
+				$data .= ", remarks = '$text' ";
+				$data .= ", date_purchase = '$date_purchase' ";
+	
+				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
+				
+			if(isset($save2)){
+				return 1;
+			}
+		}
+	}
+
+	//Delete Defective
 	function delete_defective(){
 		extract($_POST);
-		$del1 = $this->db->query("DELETE FROM defective_list where id = $id ");
+		$del1 = $this->db->query("DELETE FROM inventory where type = 3 and id = $id ");
 		if($del1)
 			return 1;
 	}
@@ -406,16 +330,13 @@ Class Action {
 	//Save Stock In
 	function save_stockin(){
 		extract($_POST);
-		$data = " supplier_id = '$supplier_id' ";
-		$data .= ", total_amount = '0' ";
-		$supp = $supplier_id;
 		
 		if(empty($id)){
 			$ref_no = sprintf("%'.08d\n", $ref_no);
 			$i = 1;
 	
 			while($i == 1){
-				$chk = $this->db->query("SELECT * FROM receiving_list where ref_no ='$ref_no'")->num_rows;
+				$chk = $this->db->query("SELECT * FROM inventory where ref_no ='$ref_no'")->num_rows;
 				if($chk > 0){
 					$ref_no = mt_rand(1,99999999);
 					$ref_no = sprintf("%'.08d\n", $ref_no);
@@ -424,16 +345,13 @@ Class Action {
 				}
 			}
 				$data = " id = '$id' ";
-				$data .= ", supplier_id = '$supp' ";
+				$data .= ", supplier_id = '$supplier_id' ";
 				$data .= ", product_id = '$product_id' ";
 				$data .= ", qty = '$qty' ";
 				$data .= ", type = '1' ";
-				$data .= ", stock_from = 'receiving' ";
-				$details = json_encode(array('price'=>'0','qty'=>$qty));
-				$data .= ", other_details = '$details' ";
+				$data .= ", stock_from = 'stockin' ";
 				$data .= ", ref_no = '$ref_no' ";
-				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
-	
+
 				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
 				
 			if(isset($save2)){
@@ -457,11 +375,8 @@ Class Action {
 				}
 				$data .= ", qty = '$qty' ";
 				$data .= ", type = '1' ";
-				$data .= ", stock_from = 'receiving' ";
-				$details = json_encode(array('price'=>'0','qty'=>$qty));
-				$data .= ", other_details = '$details' ";
+				$data .= ", stock_from = 'stockin' ";
 				$data .= ", ref_no = '$ref_no' ";
-				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
 	
 				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
 				
@@ -497,7 +412,7 @@ Class Action {
 			$i = 1;
 	
 			while($i == 1){
-				$chk = $this->db->query("SELECT * FROM receiving_list where ref_no ='$ref_no'")->num_rows;
+				$chk = $this->db->query("SELECT * FROM inventory where ref_no ='$ref_no'")->num_rows;
 				if($chk > 0){
 					$ref_no = mt_rand(1,99999999);
 					$ref_no = sprintf("%'.08d\n", $ref_no);
@@ -511,10 +426,7 @@ Class Action {
 				$data .= ", qty = '$qty' ";
 				$data .= ", type = '2' ";
 				$data .= ", stock_from = 'stockout' ";
-				$details = json_encode(array('price'=>'0','qty'=>$qty));
-				$data .= ", other_details = '$details' ";
 				$data .= ", ref_no = '$ref_no' ";
-				$data .= ", remarks = 'Stock from stock out-".$ref_no."' ";
 	
 				$save2 = $this->db->query("INSERT INTO inventory set ".$data);
 				
@@ -527,7 +439,7 @@ Class Action {
 	//Edit Stock Out
 	function edit_stockout(){
 		extract($_POST);
-		
+
 		if(!empty($id)){
 
 				$data = " id = '$id' ";
@@ -540,11 +452,8 @@ Class Action {
 				$data .= ", qty = '$qty' ";
 				$data .= ", type = '2' ";
 				$data .= ", stock_from = 'stockout' ";
-				$details = json_encode(array('price'=>'0','qty'=>$qty));
-				$data .= ", other_details = '$details' ";
 				$data .= ", ref_no = '$ref_no' ";
-				$data .= ", remarks = 'Stock from Receiving-".$ref_no."' ";
-	
+				
 				$save2 = $this->db->query("UPDATE inventory set ".$data." where id=".$id);
 				
 			if(isset($save2)){

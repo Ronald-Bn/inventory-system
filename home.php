@@ -10,22 +10,22 @@
   if(!isset($_SESSION['login_id'])){
   header('location:login.php');
 }
+  echo $_SESSION['login_id'];
    date_default_timezone_set('Asia/Manila');
     $i = 1;
     $cat = $conn->query("SELECT * FROM category_list order by name asc");
     while($row=$cat->fetch_assoc()):
         $cat_arr[$row['id']] = $row['name'];
     endwhile;
-    $product = $conn->query("SELECT * FROM product_list r order by name asc LIMIT 10");
-    while($row=$product->fetch_assoc()):
+   
     $inn = $conn->query("SELECT sum(qty) as inn FROM inventory where type = 1");
     $inn = $inn && $inn->num_rows > 0 ? $inn->fetch_array()['inn'] : 0;
     $out = $conn->query("SELECT sum(qty) as `out` FROM inventory where type = 2");
     $out = $out && $out->num_rows > 0 ? $out->fetch_array()['out'] : 0;
-    $def = $conn->query("SELECT sum(qty) as `def` FROM defective_list where type = 3");
+    $def = $conn->query("SELECT sum(qty) as `def` FROM inventory where type = 3");
     $def = $def && $def->num_rows > 0 ? $def->fetch_array()['def'] : 0;
-    $available = $inn - $out;
-    endwhile;
+    $available = $inn - $out - $def;
+    
 
     $b = date("Y",strtotime("-1 year"));
     $c = date("Y",strtotime("-2 year"));
@@ -128,7 +128,7 @@
 								<div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
                   <?php 
                     date_default_timezone_set('Asia/Manila');
-                     $def = $conn->query("SELECT SUM(qty) as def FROM defective_list where type = '3' and date(date_updated)= '".date('Y-m-d')."'");
+                     $def = $conn->query("SELECT SUM(qty) as def FROM inventory where type = '3' and date(date_updated)= '".date('Y-m-d')."'");
                      $def = $def && $def->num_rows > 0 ? number_format($def->fetch_array()['def'],2) : 0;
                      echo $def;
                   ?>  
