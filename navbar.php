@@ -13,16 +13,18 @@
 	}
 .sidenav a, .dropdown-btn {	
   height:50px;
-  padding:12px;
+  padding:15px 15px 15px;
+  color:#989898;
+  background-color: #000000c4;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   display: block;
   border: none;
-  background: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
   outline: none;
+  margin-bottom: -1px;
 }
 #outer
 {
@@ -36,7 +38,8 @@
 
 /* On mouse-over */
 .sidenav a:hover, .dropdown-btn:hover {
-  color: #f1f1f1;
+	background-color: #000000ad;
+  color: #fffafa;
 }
 
 /* Main content */
@@ -68,13 +71,13 @@
 		<div class="sidebar-list">
 		<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Home</a>
 		<a href="index.php?page=inventory" class="nav-item nav-inventory" style="width:100%"><span class='icon-field'><i class="fa fa-list"></i></span> Inventory</a></div>
-			<button class="dropdown-btn">Manage Inventory&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
+			<button class="dropdown-btn"><b>Manage Inventory </b> &nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
 				<a href="index.php?page=stock-out" class="nav-item nav-stock-out"><span class='icon-field'><i class="fa fa-coins"></i></span> Stock Out</a>
 				<a href="index.php?page=defective-item" class="nav-item nav-defective-item"><span class='icon-field'><i class="fa fa-exclamation-circle"></i></span> Defective items</a>
 				<a href="index.php?page=stock-in" class="nav-item nav-stock-in"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Stock In</a>
 				</div>
-			<button class="dropdown-btn hide-btn">List Form&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
+			<button class="dropdown-btn hide-btn"><b>List Form </b>&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
 				<a href="index.php?page=categories" class="nav-item nav-categories"><span class='icon-field'><i class="fa fa-list"></i></span> Category List</a>
 				<a href="index.php?page=product" class="nav-item nav-product"><span class='icon-field'><i class="fa fa-boxes"></i></span> Product List</a>
