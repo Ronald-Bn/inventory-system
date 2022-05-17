@@ -23,11 +23,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			 $save = $conn->query("UPDATE tblattempts set attempts = attempts + 1 where id = '1'");
 		}
 }
-$query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
-		foreach ($query as $key => $value) {
-			if(!is_numeric($key))
-				$_SESSION['setting_'.$key] = $value;
-		}
+// $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
+// 		foreach ($query as $key => $value) {
+// 			if(!is_numeric($key))
+// 				$_SESSION['setting_'.$key] = $value;
+// 		}
 ?>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -122,7 +122,7 @@ $query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 							while($row=$qry->fetch_assoc()):
 								if($row['attempts'] > 3){
 									$_SESSION["locked"] = time(); 
-									print 'Please wait for <div id="some_div">
+									print '<div class="alert alert-danger"><h5>Please wait for <div id="some_div"></h5></div>
 									</div>';
 									unset($_SESSION["error"]);
 								}

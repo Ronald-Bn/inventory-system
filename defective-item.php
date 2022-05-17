@@ -26,12 +26,6 @@
 							</thead>
 							<tbody>
 							<?php 
-								$customer = $conn->query("SELECT * FROM customer_list order by name asc");
-								while($row=$customer->fetch_assoc()):
-									$cus_arr[$row['id']] = $row['name'];
-								endwhile;
-									$cus_arr[0] = "GUEST";
-
 								$product = $conn->query("SELECT * FROM product_list order by name asc");
 								while($row=$product->fetch_assoc()):
 									$pro_arr[$row['id']] = $row['name'];

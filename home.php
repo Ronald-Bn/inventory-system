@@ -46,12 +46,12 @@
       <hr/>
       
       <div class="row justify-content-center">
-      <div class="col-xl-11 col-lg-11">
+      <div class="col-xl-10 col-lg-10">
               <div class="card shadow mb-4">
                   <!-- Card Header - Dropdown -->
                   <div
-                      class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Inventory</h6>
+                      class="card-header py-3 text-center">
+                      <h5 class="m-0 font-weight-bold"><b>STOCK MONITORING</b></h5>
                       <div class="dropdown">
                       </div>
                   </div>
@@ -142,6 +142,7 @@ new Chart("mydoughChart", {
       display: true,
       text: "Inventory (Overall)",
       borderWidth: 1,
+      fontSize:20,
       xPadding: 0,
       yPadding: 0,
     }
